@@ -1,5 +1,14 @@
 # Change Log
 
+## v3.3.6 (2018/11/19)
+* Updated to AdColony SDK 3.3.6 (iOS) and 3.3.4 (Android)
+* [iOS] Added support for silencing audio with the Ringer/Silent switch. This is configurable on the clients.adcolony.com dashboard.
+* [iOS] Audio session will not activate until an ad plays.
+* [Android] Added additional configure() signatures that accept an Application context instead of Activity.
+* [Android] Deprecated AdColonyAdViewActivity, AdColonyNativeAdView, and onAudioStarted/onAudioStopped() callbacks.
+* [Android] Handle API level 28 changes for [default cleartext traffic behavior](https://developer.android.com/about/versions/pie/android-9.0-changes-28#framework-security-changes).
+* [All] Several bug fixes and stability improvements.
+
 ## v3.3.5 (2018/07/06)
 * Officially open sourced Unity plugin
 

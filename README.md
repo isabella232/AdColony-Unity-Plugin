@@ -2,9 +2,9 @@
 ![progress](https://img.shields.io/badge/progress-developing-yellow.svg)
 ![contributions](https://img.shields.io/badge/contributions-welcome-green.svg)
 <br>
-![Unity Version](https://img.shields.io/badge/Unity%20Plugin-3.3.5-808080.svg)
-![Android Version](https://img.shields.io/badge/Android%20SDK-3.3.5-808080.svg)
-![iOS Version](https://img.shields.io/badge/iOS%20SDK-3.3.5-808080.svg)
+![Unity Version](https://img.shields.io/badge/Unity%20Plugin-3.3.6-808080.svg)
+![Android Version](https://img.shields.io/badge/Android%20SDK-3.3.6-808080.svg)
+![iOS Version](https://img.shields.io/badge/iOS%20SDK-3.3.6-808080.svg)
 
 # AdColony SDK Unity Plugin
 - [Requirements](#requirements)
@@ -32,6 +32,15 @@
 AdColony delivers zero-buffering, [full-screen Instant-Play™ HD video](https://www.adcolony.com/technology/instant-play/), [interactive Aurora™ Video](https://www.adcolony.com/technology/auroravideo), and Aurora™ Playable ads that can be displayed anywhere within your application. Our advertising SDK is trusted by the world’s top gaming and non-gaming publishers, delivering them the highest monetization opportunities from brand and performance advertisers. AdColony’s SDK can monetize a wide range of ad formats including in-stream/pre-roll, out-stream/interstitial and V4VC™, a secure system for rewarding users of your app with virtual currency upon the completion of video and playable ads.
 
 # Release Notes
+## v3.3.6 (11/19/2018)
+* Updated to AdColony SDK 3.3.6 (iOS/Android)
+* Several bug fixes and stability improvements.
+* [iOS] Added support for silencing audio with the Ringer/Silent switch. This is configurable on the clients.adcolony.com dashboard.
+* [iOS] Audio session will not activate until an ad plays.
+* [Android] Added additional configure() signatures that accept an Application context instead of Activity.
+* [Android] Deprecated AdColonyAdViewActivity, AdColonyNativeAdView, and onAudioStarted/onAudioStopped() callbacks.
+* [Android] Handle API level 28 changes for [default cleartext traffic behavior](https://developer.android.com/about/versions/pie/android-9.0-changes-28#framework-security-changes).
+
 ## v3.3.5 (7/18/2018)
 
 * Officially open sourced Unity plugin
