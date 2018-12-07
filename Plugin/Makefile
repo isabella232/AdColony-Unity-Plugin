@@ -65,20 +65,9 @@ clean_android_wrapper:
 
 android: android_jar android_wrapper
 	@# Move to plugin folder
-	rm -rf "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/AdColony/libs"
-	mkdir -p "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/libs"
 	mkdir -p "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/AdColony/libs"
 	cp "$(ANDROID_FINAL_JAR)" "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/AdColony/libs/AdColony.jar"
 	cp "$(ANDROID_FINAL_WRAPPER_JAR)" "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/AdColony/libs/AdColonyUnityWrapper.jar"
-	find "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/libs" -name "libadcolony.so" -exec rm "{}" +
-	find "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/libs" -name "libjs.so" -exec rm "{}" +
-	cp -r "$(ANDROID_DIR)/Library"/* "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/libs"
-	rm "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/libs/adcolony.jar"
-
-	@# remove unsupported Unity architectures
-	rm -rf "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/libs/arm64-v8a"
-	rm -rf "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/libs/armeabi"
-	rm -rf "$(UNITY_PLUGIN_DIR)/Assets/Plugins/Android/libs/x86_64"
 
 clean_android: clean_android_jar clean_android_wrapper
 
