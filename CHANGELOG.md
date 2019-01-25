@@ -1,5 +1,13 @@
 # Change Log
 
+## v3.3.8 (2019/01/25)
+* Updated to AdColony SDK 3.3.7 (iOS) and 3.3.8 (Android)
+* [iOS] Fixed a CPU watchdog transgression.
+* [iOS] Fixed a memory leak that could cause UIView objects to stay in memory past their lifetime.
+* [iOS] Added advanced logging for inconsistent view controller orientations.
+* [iOS] Several other bug fixes and stability improvements.
+* [Android] Handled RuntimeExceptions that can occur during WebView initialization if the device reports that it is missing the WebView package.
+
 ## v3.3.7 (2018/12/06)
 * Updated to AdColony SDK 3.3.7 (Android)
 * [Android] Significant stability improvements related to memory consumption.
