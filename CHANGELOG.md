@@ -1,5 +1,10 @@
 # Change Log
 
+## v3.3.10 (2019/06/12)
+* Updated to AdColony SDK 3.3.8.1 (iOS) and 3.3.10 (Android)
+* [iOS] Fixed a bug where click action for some of the ads was not working.
+* [Android] Improved WebView behavior for duties previously handled by our shared object libraries.
+
 ## v3.3.9 (2019/03/20)
 * Updated to AdColony SDK 3.3.9 (Android)
 * [Android] Fixed NullPointerException that stopped ads from being served on Android Lollipop devices with the 3.3.7 and 3.3.8 SDKs.
