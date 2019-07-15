@@ -35,6 +35,7 @@ AdColony delivers zero-buffering, [full-screen Instant-Play™ HD video](https:/
 ## v3.3.11 (2019/07/15)
 * Updated to AdColony SDK 3.3.11 (Android)
 * [Android] Fixed ConcurrentModificationException that was exposed with a server-side update.
+* [Android] Fixed an issue related to partial downloads that potentially caused AdColony to become disabled.
 
 ## v3.3.10 (2019/06/12)
 * Updated to AdColony SDK 3.3.8.1 (iOS) and 3.3.10 (Android)
