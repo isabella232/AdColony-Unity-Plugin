@@ -2,8 +2,8 @@
 ![progress](https://img.shields.io/badge/progress-developing-yellow.svg)
 ![contributions](https://img.shields.io/badge/contributions-welcome-green.svg)
 <br>
-![Unity Version](https://img.shields.io/badge/Unity%20Plugin-3.3.10-808080.svg)
-![Android Version](https://img.shields.io/badge/Android%20SDK-3.3.10-808080.svg)
+![Unity Version](https://img.shields.io/badge/Unity%20Plugin-3.3.11-808080.svg)
+![Android Version](https://img.shields.io/badge/Android%20SDK-3.3.11-808080.svg)
 ![iOS Version](https://img.shields.io/badge/iOS%20SDK-3.3.8.1-808080.svg)
 
 # AdColony SDK Unity Plugin
@@ -32,6 +32,10 @@
 AdColony delivers zero-buffering, [full-screen Instant-Play™ HD video](https://www.adcolony.com/technology/instant-play/), [interactive Aurora™ Video](https://www.adcolony.com/technology/auroravideo), and Aurora™ Playable ads that can be displayed anywhere within your application. Our advertising SDK is trusted by the world’s top gaming and non-gaming publishers, delivering them the highest monetization opportunities from brand and performance advertisers. AdColony’s SDK can monetize a wide range of ad formats including in-stream/pre-roll, out-stream/interstitial and V4VC™, a secure system for rewarding users of your app with virtual currency upon the completion of video and playable ads.
 
 # Release Notes
+## v3.3.11 (2019/07/15)
+* Updated to AdColony SDK 3.3.11 (Android)
+* [Android] Fixed ConcurrentModificationException that was exposed with a server-side update.
+
 ## v3.3.10 (2019/06/12)
 * Updated to AdColony SDK 3.3.8.1 (iOS) and 3.3.10 (Android)
 * [iOS] Fixed a bug where click action for some of the ads was not working.

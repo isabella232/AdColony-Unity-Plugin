@@ -1,5 +1,9 @@
 # Change Log
 
+## v3.3.11 (2019/07/15)
+* Updated to AdColony SDK 3.3.11 (Android)
+* [Android] Fixed ConcurrentModificationException that was exposed with a server-side update.
+
 ## v3.3.10 (2019/06/12)
 * Updated to AdColony SDK 3.3.8.1 (iOS) and 3.3.10 (Android)
 * [iOS] Fixed a bug where click action for some of the ads was not working.
