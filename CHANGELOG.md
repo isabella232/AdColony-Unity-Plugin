@@ -1,4 +1,7 @@
 # Change Log
+## v4.1.0 (2019/09/27)
+* Updated to AdColony SDK 4.1.0 (iOS/Android).
+* Added support for banners.
 
 ## v3.3.11 (2019/07/15)
 * Updated to AdColony SDK 3.3.11 (Android)

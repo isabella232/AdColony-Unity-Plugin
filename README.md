@@ -15,7 +15,6 @@
     - [Retrieve AdColony App and Zone Ids](#retrieve-adColony-app-and-zone-ids)
     - [Installation](#installation)
     - [Showing Ads](#showing-ads)
-    - [Rewarded Video Ads](#rewarded-video-ads)
 - [Gradle Integration](#gradle-integration)
 - [GDPR](#gdpr)
 - [Legal Requirements](#legal-requirements)
@@ -32,6 +31,10 @@
 AdColony delivers zero-buffering, [full-screen Instant-Play™ HD video](https://www.adcolony.com/technology/instant-play/), [interactive Aurora™ Video](https://www.adcolony.com/technology/auroravideo), and Aurora™ Playable ads that can be displayed anywhere within your application. Our advertising SDK is trusted by the world’s top gaming and non-gaming publishers, delivering them the highest monetization opportunities from brand and performance advertisers. AdColony’s SDK can monetize a wide range of ad formats including in-stream/pre-roll, out-stream/interstitial and V4VC™, a secure system for rewarding users of your app with virtual currency upon the completion of video and playable ads.
 
 # Release Notes
+## v4.1.0 (2019/09/27)
+* Updated to AdColony SDK 4.1.0 (iOS/Android).
+* Added support for banners.
+
 ## v3.3.11 (2019/07/15)
 * Updated to AdColony SDK 3.3.11 (Android)
 * [Android] Fixed ConcurrentModificationException that was exposed with a server-side update.
@@ -98,8 +101,8 @@ The Unity plugin requires both the native iOS and Android SDK repositories in th
 
 ```
 cd Plugin/src/sdks
-git clone https://github.com/AdColony/AdColony-Android-SDK-3.git
-git clone https://github.com/AdColony/AdColony-iOS-SDK-3.git
+git clone https://github.com/AdColony/AdColony-Android-SDK.git
+git clone https://github.com/AdColony/AdColony-iOS-SDK.git
 ```
 
 To build the plugin, use the makefile from the Plugin folder:
@@ -155,21 +158,51 @@ Please note that updating from our 2.x Unity Plugin is not a drag and drop updat
 ## Showing Ads
 
 The basics of using the AdColony SDK to serve ads to your users are:
-1. Configure the service
 
-    The first step is to configure the AdColony SDK:
-    ```csharp
+#### Configure AdColony
+The first step is to configure the AdColony SDK:
+
+```csharp
     string[] zoneIds = new string[] { "zone_id_1", "zone_id_2" };
     AdColony.Ads.Configure(APP_ID, null, zoneIds);
-    ```
+```
 
-    You can configure the service more than once without any performance impact. If the service is already initialized with the same options and zones, the attempt will be ignored.
+You can configure the service more than once without any performance impact. If the service is already initialized with the same options and zones, the attempt will be ignored.
 
-    See the API documentation on how to use the `AppOptions`.
+See the API documentation on how to use the `AppOptions`.
 
+#### Showing Banner Ads
 1. Register for callbacks
 
-    At this point, you will also want to register for important service callbacks such as:
+    After successful configuration of AdColony SDK, you need to register banner callbacks such as:
+
+    * `OnAdViewLoaded` - Called when ad view has been loaded.
+    * `OnAdViewFailedToLoad` - Called when ad view failed to load.
+
+    For a complete listing of callbacks see `AdColony.cs`.
+
+    ```cs
+    AdColony.AdColonyAdView adView;
+
+    AdColony.Ads.OnAdViewLoaded += (AdColony.AdColonyAdView ad) => {
+        adView = ad;
+    };
+
+    AdColony.Ads.OnAdViewFailedToLoad += (AdColony.AdColonyAdView ad) => {
+        Debug.Log("Banner ad failed to load");
+    };
+    ```
+
+2. Request Banner Ad
+
+    ```csharp
+    AdColony.Ads.RequestAdView("zone_id_1", AdColony.AdSize.Banner, null);
+    ```
+
+#### Showing Interstitial Ads
+1. Register for callbacks
+
+    After successful configuration of AdColony SDK, you will also want to register for important service callbacks such as:
 
     * `OnRequestInterstitial` - Called when a requested ad is ready to be shown
     * `OnExpiring` - Called when an ad has expired (typically after 30-60 min), we suggest using this callback to request a new ad
@@ -189,13 +222,13 @@ The basics of using the AdColony SDK to serve ads to your users are:
     };
     ```
 
-1. Request an ad
+2. Request an Interstitial Ad
 
     ```csharp
     AdColony.Ads.RequestInterstitialAd("zone_id_1", null);
     ```
 
-1. Show the ad
+3. Show the Interstitial Ad
 
     ```csharp
     if (_ad != null) {
@@ -203,8 +236,8 @@ The basics of using the AdColony SDK to serve ads to your users are:
     }
     ```
 
-## Rewarded Video Ads
-Showing a rewarded video ad is very much like showing a video ad. There are two subtle differences:
+#### Showing Rewarded Interstitial Ads
+Showing a rewarded video ad is very much like showing an interstital video ad. There are two subtle differences:
 1. You can optionally show system alerts informing the user they are about to or have received an award using the ad options `ShowPrePopup` and `ShowPostPopup`.
     ```csharp
     AdColony.AdOptions adOptions = new AdColony.AdOptions();

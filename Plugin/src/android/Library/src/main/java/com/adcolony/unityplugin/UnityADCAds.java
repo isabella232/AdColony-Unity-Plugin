@@ -6,6 +6,8 @@ import android.location.Location;
 import android.util.Log;
 import android.content.Context;
 import android.app.Activity;
+import android.view.Gravity;
+
 import com.unity3d.player.UnityPlayer;
 import com.adcolony.sdk.*;
 
@@ -19,6 +21,7 @@ import org.json.JSONObject;
 //
 public class UnityADCAds {
     private static Map<String, UnityADCAdContainer> _adContainers = new HashMap<String, UnityADCAdContainer>();
+    private static Map<String, UnityADCAdViewContainer> _adViewContainers = new HashMap<String, UnityADCAdViewContainer>();
     private static UnityADCAds _sharedInstance;
     private Map<String, Object> _cachedAppOptions = null;
     private String _managerName = "";
@@ -239,7 +242,7 @@ public class UnityADCAds {
                     JSONArray zoneIds = message.getJSONArray("zone_ids");
                     List lZoneIds = UnityADCUtils.toList(message.getJSONArray("zone_ids"));
                     String zoneListJson = UnityADCUtils.toJsonFromStringList(lZoneIds);
-        sendUnityMessage("_OnConfigure", zoneListJson);
+                    sendUnityMessage("_OnConfigure", zoneListJson);
                 } catch (JSONException e) {
                     Log.d(TAG, "Error Parsing Configuration Completed JSON");
                     e.printStackTrace();
@@ -357,4 +360,52 @@ public class UnityADCAds {
         AdColonyEventTracker.logLevelAchieved((Integer)level);
     }
 
+    // START Banner AD
+
+    public static void requestAdView(String json) {
+        Map<String, Object> params = UnityADCUtils.jsonToMap(json);
+
+        AdColonyAdOptions adOptions = null;
+        Map<String, Object> adOptionsMap = params.containsKey("ad_options")?(Map<String, Object>)params.get("ad_options"):null;
+        if (adOptionsMap != null) {
+            adOptions = getSharedInstance().adOptionsFromMap(adOptionsMap);
+        }
+
+        String zoneId = (String)params.get("zone_id");
+        int adSize = (int)params.get("ad_size");
+        int adPosition = (int)params.get("ad_position");
+
+        UnityADCAdViewContainer adContainer = new UnityADCAdViewContainer(adPosition);
+        getSharedInstance()._adViewContainers.put(adContainer.id, adContainer);
+        AdColony.requestAdView(zoneId, adContainer, getAdSize(adSize), adOptions);
+    }
+
+    public static void destroyAdView(String id) {
+        destroyNativeAdView(id);
+
+    }
+
+    private static void destroyNativeAdView(String id) {
+        UnityADCAdViewContainer adcAdViewContainer = getSharedInstance()._adViewContainers.get(id);
+        if (adcAdViewContainer!=null && adcAdViewContainer.ad!=null) {
+            adcAdViewContainer.ad.get_ad().destroy();
+            getSharedInstance()._adViewContainers.remove(id);
+        }
+    }
+
+    private static AdColonyAdSize getAdSize(int adSize) {
+        switch (adSize) {
+            case 1:
+                return AdColonyAdSize.BANNER;
+            case 2:
+                return AdColonyAdSize.MEDIUM_RECTANGLE;
+            case 3:
+                return AdColonyAdSize.LEADERBOARD;
+            case 4:
+                return AdColonyAdSize.SKYSCRAPER;
+             default:
+                return AdColonyAdSize.BANNER;
+        }
+    }
+    // END Banner AD
 }

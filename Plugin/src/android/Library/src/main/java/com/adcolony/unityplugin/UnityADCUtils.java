@@ -141,6 +141,26 @@ public class UnityADCUtils {
         return UnityADCUtils.toJson(map);
     }
 
+    static String adDetailsToJson(AdColonyZone zone,int position) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (zone != null) {
+            map.put("zone_id", zone.getZoneID());
+            map.put("type", zone.getZoneType());
+            map.put("position",Integer.toString(position));
+        }
+        return UnityADCUtils.toJson(map);
+    }
+
+    static String adDetailsToJson(String zone,int position) {
+        Map<String, Object> map = new HashMap<String, Object>();
+        if (zone != null) {
+            map.put("zone_id", zone);
+            map.put("type", "banner");
+            map.put("position", Integer.toString(position));
+        }
+        return UnityADCUtils.toJson(map);
+    }
+
     static String rewardToJson(AdColonyReward reward) {
         Map<String, Object> map = new HashMap<String, Object>();
         if (reward != null) {
