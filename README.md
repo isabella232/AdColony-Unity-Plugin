@@ -2,9 +2,9 @@
 ![progress](https://img.shields.io/badge/progress-developing-yellow.svg)
 ![contributions](https://img.shields.io/badge/contributions-welcome-green.svg)
 <br>
-![Unity Version](https://img.shields.io/badge/Unity%20Plugin-3.3.11-808080.svg)
-![Android Version](https://img.shields.io/badge/Android%20SDK-3.3.11-808080.svg)
-![iOS Version](https://img.shields.io/badge/iOS%20SDK-3.3.8.1-808080.svg)
+![Unity Version](https://img.shields.io/badge/Unity%20Plugin-4.1.1-808080.svg)
+![Android Version](https://img.shields.io/badge/Android%20SDK-4.1.0-808080.svg)
+![iOS Version](https://img.shields.io/badge/iOS%20SDK-4.1.1-808080.svg)
 
 # AdColony SDK Unity Plugin
 - [Requirements](#requirements)
@@ -23,7 +23,7 @@
 
 # Requirements
 - Mac OS *(feel free to add Windows support and make a pull request!)*
-    - Case-insensitive file system, see Unity issues: [feedback.unity3d.com](https://feedback.unity3d.com/suggestions/editor-support-casesensitive-f), [forum.unity.com](https://forum.unity.com/threads/is-unity-ever-going-to-support-a-case-sensitive-filesystem.412139/) 
+    - Case-insensitive file system, see Unity issues: [feedback.unity3d.com](https://feedback.unity3d.com/suggestions/editor-support-casesensitive-f), [forum.unity.com](https://forum.unity.com/threads/is-unity-ever-going-to-support-a-case-sensitive-filesystem.412139/)
 - [Unity 5.x+](https://unity3d.com/get-unity/download)
 - [Android SDK](https://developer.android.com/studio/#downloads)
 
@@ -31,6 +31,9 @@
 AdColony delivers zero-buffering, [full-screen Instant-Play™ HD video](https://www.adcolony.com/technology/instant-play/), [interactive Aurora™ Video](https://www.adcolony.com/technology/auroravideo), and Aurora™ Playable ads that can be displayed anywhere within your application. Our advertising SDK is trusted by the world’s top gaming and non-gaming publishers, delivering them the highest monetization opportunities from brand and performance advertisers. AdColony’s SDK can monetize a wide range of ad formats including in-stream/pre-roll, out-stream/interstitial and V4VC™, a secure system for rewarding users of your app with virtual currency upon the completion of video and playable ads.
 
 # Release Notes
+## v4.1.1 (2019/10/09)
+* Updated to AdColony SDK 4.1.1 (iOS).
+
 ## v4.1.0 (2019/09/27)
 * Updated to AdColony SDK 4.1.0 (iOS/Android).
 * Added support for banners.
@@ -280,8 +283,8 @@ android {
 If using Proguard, add the following to your Proguard configuration:
 ```
 # For communication with AdColony's WebView
--keepclassmembers class * { 
-    @android.webkit.JavascriptInterface <methods>; 
+-keepclassmembers class * {
+    @android.webkit.JavascriptInterface <methods>;
 }
 
 # Keep ADCNative class members unobfuscated
@@ -303,14 +306,14 @@ In the AdColony SDK Unity plugin v3.3.4, we added explicit methods to our AppOpt
 ```csharp
 AdColony.AppOptions options = new AdColony.AppOptions();
 
-// Indicates the GDPR requirement of the user. 
-// If it's true, the user's subject to the GDPR laws. 
+// Indicates the GDPR requirement of the user.
+// If it's true, the user's subject to the GDPR laws.
 // If you set it to false, the value of consent string will be ignored.
-options.GdprRequired = true; 
+options.GdprRequired = true;
 
-// Your user's consent string. 
+// Your user's consent string.
 // In this case, the user has given consent to store and process personal information.
-options.GdprConsentString = "1"; 
+options.GdprConsentString = "1";
 
 AdColony.Ads.Configure(APP_ID, appOptions, ZONE_IDS);
 ```
