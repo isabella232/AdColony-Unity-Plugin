@@ -38,12 +38,20 @@ public class UnityADCAdViewContainer extends AdColonyAdViewListener {
 
     @Override
     public void onLeftApplication(AdColonyAdView ad) {
+        if (this.ad == null) {
+            Log.e("UnityADCAds", "onLeftApplication called without request handled");
+            return;
+        }
         String json = this.ad.toJson();
         UnityADCAds.sendUnityMessage("_OnAdColonyAdViewLeftApplication", json);
     }
 
     @Override
     public void onClosed(AdColonyAdView ad) {
+        if (this.ad == null) {
+            Log.e("UnityADCAds", "onClosed called without request handled");
+            return;
+        }
         String json = this.ad.toJson();
         UnityADCAds.sendUnityMessage("_OnAdColonyAdViewClosed", json);
     }
@@ -60,6 +68,10 @@ public class UnityADCAdViewContainer extends AdColonyAdViewListener {
 
     @Override
     public void onClicked(AdColonyAdView ad) {
+        if (this.ad == null) {
+            Log.e("UnityADCAds", "onClicked called without request handled");
+            return;
+        }
         String json = this.ad.toJson();
         UnityADCAds.sendUnityMessage("_OnAdColonyAdViewClicked", json);
     }

@@ -34,6 +34,10 @@ public class UnityADCAdContainer extends AdColonyInterstitialListener {
     }
 
     public void onClosed(AdColonyInterstitial ad) {
+        if (this.ad == null) {
+            Log.e("UnityADCAds", "onClosed called without request handled");
+            return;
+        }
         String json = this.ad.toJson();
         UnityADCAds.sendUnityMessage("_OnClosed", json);
     }
@@ -49,11 +53,19 @@ public class UnityADCAdContainer extends AdColonyInterstitialListener {
     }
 
     public void onLeftApplication(AdColonyInterstitial ad) {
+        if (this.ad == null) {
+            Log.e("UnityADCAds", "onLeftApplication called without request handled");
+            return;
+        }
         String json = this.ad.toJson();
         UnityADCAds.sendUnityMessage("_OnLeftApplication", json);
     }
 
     public void onClicked(AdColonyInterstitial ad) {
+        if (this.ad == null) {
+            Log.e("UnityADCAds", "onClicked called without request handled");
+            return;
+        }
         String json = this.ad.toJson();
         UnityADCAds.sendUnityMessage("_OnClicked", json);
     }
@@ -69,6 +81,10 @@ public class UnityADCAdContainer extends AdColonyInterstitialListener {
     }
 
     public void onExpiring(AdColonyInterstitial ad) {
+        if (this.ad == null) {
+            Log.e("UnityADCAds", "onExpiring called without request handled");
+            return;
+        }
         UnityADCAds.sendUnityMessage("_OnExpiring", this.ad.toJson());
     }
 }
