@@ -1,4 +1,8 @@
 # Change Log
+## v4.1.2.0 (2019/10/24)
+* Updated to AdColony SDK 4.1.2 (iOS).
+* Fixed NPE crash issue in android plugin.
+
 ## v4.1.1.0 (2019/09/26)
 * Updated to AdColony SDK 4.1.1 (iOS).
 
