@@ -1,4 +1,9 @@
 # Change Log
+## v4.1.3.0 (2020/02/13)
+* Updated to AdColony SDK 4.1.3 (iOS) and 4.1.3 (Android).
+* Added show and hide APIs for banner ad.
+* Added destroy ad API for Interstitial ad.
+
 ## v4.1.2.0 (2019/10/24)
 * Updated to AdColony SDK 4.1.2 (iOS).
 * Fixed NPE crash issue in android plugin.

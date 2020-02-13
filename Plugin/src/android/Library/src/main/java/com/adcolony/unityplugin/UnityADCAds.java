@@ -1,34 +1,47 @@
 package com.adcolony.unityplugin;
 
-import java.util.*;
-import java.util.concurrent.Semaphore;
+import android.app.Activity;
 import android.location.Location;
 import android.util.Log;
-import android.content.Context;
-import android.app.Activity;
-import android.view.Gravity;
+import android.view.View;
 
+import com.adcolony.sdk.AdColony;
+import com.adcolony.sdk.AdColonyAdOptions;
+import com.adcolony.sdk.AdColonyAdSize;
+import com.adcolony.sdk.AdColonyAppOptions;
+import com.adcolony.sdk.AdColonyCustomMessage;
+import com.adcolony.sdk.AdColonyCustomMessageListener;
+import com.adcolony.sdk.AdColonyEventTracker;
+import com.adcolony.sdk.AdColonyUserMetadata;
+import com.adcolony.sdk.AdColonyZone;
 import com.unity3d.player.UnityPlayer;
-import com.adcolony.sdk.*;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 //
 // Useful for converting data-types between the two languages and enforcing synchronous
 // operations within an asynchronous framework (which we don't do anymore).
 //
 public class UnityADCAds {
-    private static Map<String, UnityADCAdContainer> _adContainers = new HashMap<String, UnityADCAdContainer>();
-    private static Map<String, UnityADCAdViewContainer> _adViewContainers = new HashMap<String, UnityADCAdViewContainer>();
+    private static Map<String, UnityADCAdContainer> _adContainers = new HashMap<>();
+    private static Map<String, UnityADCAdViewContainer> _adViewContainers = new HashMap<>();
     private static UnityADCAds _sharedInstance;
     private Map<String, Object> _cachedAppOptions = null;
     private String _managerName = "";
-    private UnityADCAdColonyCustomMessageListener _customMessageListener = new UnityADCAdColonyCustomMessageListener();
+    private UnityADCAdColonyCustomMessageListener _customMessageListener =
+            new UnityADCAdColonyCustomMessageListener();
     private Set<String> _customMessageListenerTypes = new HashSet<String>();
     private static final String TAG = "UnityADCAds";
-    private static final String ADC_UNITY_ON_CONFIGURATION_COMPLETED = "AdColony.on_configuration_completed";
+    private static final String ADC_UNITY_ON_CONFIGURATION_COMPLETED = "AdColony" +
+            ".on_configuration_completed";
 
     static synchronized UnityADCAds getSharedInstance() {
         if (_sharedInstance == null) {
@@ -50,7 +63,7 @@ public class UnityADCAds {
         AdColonyAppOptions options = new AdColonyAppOptions();
 
         if (mapCopy.containsKey("metadata")) {
-            Map<String, Object> metadata = (Map<String, Object>)mapCopy.get("metadata");
+            Map<String, Object> metadata = (Map<String, Object>) mapCopy.get("metadata");
             if (metadata != null) {
                 options.setUserMetadata(metadataFromMap(metadata));
                 mapCopy.remove("metadata");
@@ -58,27 +71,27 @@ public class UnityADCAds {
         }
 
         if (mapCopy.containsKey("gdpr_required")) {
-            options.setGDPRRequired((Boolean)mapCopy.get("gdpr_required"));
+            options.setGDPRRequired((Boolean) mapCopy.get("gdpr_required"));
             mapCopy.remove("gdpr_required");
         }
         if (mapCopy.containsKey("consent_string")) {
-            options.setGDPRConsentString((String)mapCopy.get("consent_string"));
+            options.setGDPRConsentString((String) mapCopy.get("consent_string"));
             mapCopy.remove("consent_string");
         }
         if (mapCopy.containsKey("user_id")) {
-            options.setUserID((String)mapCopy.get("user_id"));
+            options.setUserID((String) mapCopy.get("user_id"));
             mapCopy.remove("user_id");
         }
         if (mapCopy.containsKey("origin_store")) {
-            options.setOriginStore((String)mapCopy.get("origin_store"));
+            options.setOriginStore((String) mapCopy.get("origin_store"));
             mapCopy.remove("origin_store");
         }
         if (mapCopy.containsKey("orientation")) {
-            options.setRequestedAdOrientation((Integer)mapCopy.get("orientation"));
+            options.setRequestedAdOrientation((Integer) mapCopy.get("orientation"));
             mapCopy.remove("orientation");
         }
         if (mapCopy.containsKey("multi_window_enabled")) {
-            options.setMultiWindowEnabled((Boolean)mapCopy.get("multi_window_enabled"));
+            options.setMultiWindowEnabled((Boolean) mapCopy.get("multi_window_enabled"));
             mapCopy.remove("multi_window_enabled");
         }
         if (mapCopy.containsKey("logging")) {
@@ -92,7 +105,7 @@ public class UnityADCAds {
             mapCopy.remove("app_version");
         }
         if (mapCopy.containsKey("plugin_version")) {
-            options.setPlugin(AdColonyAppOptions.UNITY, (String)mapCopy.get("plugin_version"));
+            options.setPlugin(AdColonyAppOptions.UNITY, (String) mapCopy.get("plugin_version"));
             mapCopy.remove("plugin_version");
         }
 
@@ -100,13 +113,13 @@ public class UnityADCAds {
         for (Map.Entry<String, Object> entry : mapCopy.entrySet()) {
             Object o = entry.getValue();
             if (o instanceof Integer) {
-                options.setOption(entry.getKey(), ((Integer)o).doubleValue());
+                options.setOption(entry.getKey(), ((Integer) o).doubleValue());
             } else if (o instanceof String) {
-                options.setOption(entry.getKey(), (String)o);
+                options.setOption(entry.getKey(), (String) o);
             } else if (o instanceof Double) {
-                options.setOption(entry.getKey(), (Double)o);
+                options.setOption(entry.getKey(), (Double) o);
             } else if (o instanceof Boolean) {
-                options.setOption(entry.getKey(), (Boolean)o);
+                options.setOption(entry.getKey(), (Boolean) o);
             }
         }
 
@@ -118,18 +131,18 @@ public class UnityADCAds {
         AdColonyAdOptions options = new AdColonyAdOptions();
 
         if (mapCopy.containsKey("metadata")) {
-            Map<String, Object> metadata = (Map<String, Object>)mapCopy.get("metadata");
+            Map<String, Object> metadata = (Map<String, Object>) mapCopy.get("metadata");
             if (metadata != null) {
                 options.setUserMetadata(metadataFromMap(metadata));
                 mapCopy.remove("metadata");
             }
         }
         if (mapCopy.containsKey("pre_popup")) {
-            options.enableConfirmationDialog((Boolean)mapCopy.get("pre_popup"));
+            options.enableConfirmationDialog((Boolean) mapCopy.get("pre_popup"));
             mapCopy.remove("pre_popup");
         }
         if (mapCopy.containsKey("post_popup")) {
-            options.enableResultsDialog((Boolean)mapCopy.get("post_popup"));
+            options.enableResultsDialog((Boolean) mapCopy.get("post_popup"));
             mapCopy.remove("post_popup");
         }
 
@@ -137,13 +150,13 @@ public class UnityADCAds {
         for (Map.Entry<String, Object> entry : mapCopy.entrySet()) {
             Object o = entry.getValue();
             if (o instanceof Integer) {
-                options.setOption(entry.getKey(), ((Integer)o).doubleValue());
+                options.setOption(entry.getKey(), ((Integer) o).doubleValue());
             } else if (o instanceof String) {
-                options.setOption(entry.getKey(), (String)o);
+                options.setOption(entry.getKey(), (String) o);
             } else if (o instanceof Double) {
-                options.setOption(entry.getKey(), (Double)o);
+                options.setOption(entry.getKey(), (Double) o);
             } else if (o instanceof Boolean) {
-                options.setOption(entry.getKey(), (Boolean)o);
+                options.setOption(entry.getKey(), (Boolean) o);
             }
         }
 
@@ -155,39 +168,39 @@ public class UnityADCAds {
         AdColonyUserMetadata meta = new AdColonyUserMetadata();
 
         if (mapCopy.containsKey("age")) {
-            meta.setUserAge((Integer)mapCopy.get("age"));
+            meta.setUserAge((Integer) mapCopy.get("age"));
             mapCopy.remove("age");
         }
         if (mapCopy.containsKey("interests")) {
-            List<String> interests = (List<String>)mapCopy.get("interests");
+            List<String> interests = (List<String>) mapCopy.get("interests");
             for (String interest : interests) {
                 meta.addUserInterest(interest);
             }
             mapCopy.remove("interests");
         }
         if (mapCopy.containsKey("gender")) {
-            meta.setUserGender((String)mapCopy.get("gender"));
+            meta.setUserGender((String) mapCopy.get("gender"));
             mapCopy.remove("gender");
         }
         if (mapCopy.containsKey("latitude") && mapCopy.containsKey("longitude")) {
             Location location = new Location("");
-            location.setLatitude(Double.valueOf((Double)mapCopy.get("latitude")));
-            location.setLongitude(Double.valueOf((Double)mapCopy.get("longitude")));
+            location.setLatitude(Double.valueOf((Double) mapCopy.get("latitude")));
+            location.setLongitude(Double.valueOf((Double) mapCopy.get("longitude")));
         }
         if (mapCopy.containsKey("zipcode")) {
-            meta.setUserZipCode((String)mapCopy.get("zipcode"));
+            meta.setUserZipCode((String) mapCopy.get("zipcode"));
             mapCopy.remove("zipcode");
         }
         if (mapCopy.containsKey("income")) {
-            meta.setUserAnnualHouseholdIncome((Integer)mapCopy.get("income"));
+            meta.setUserAnnualHouseholdIncome((Integer) mapCopy.get("income"));
             mapCopy.remove("income");
         }
         if (mapCopy.containsKey("marital_status")) {
-            meta.setUserMaritalStatus((String)mapCopy.get("marital_status"));
+            meta.setUserMaritalStatus((String) mapCopy.get("marital_status"));
             mapCopy.remove("marital_status");
         }
         if (mapCopy.containsKey("edu_level")) {
-            meta.setUserEducation((String)mapCopy.get("edu_level"));
+            meta.setUserEducation((String) mapCopy.get("edu_level"));
             mapCopy.remove("edu_level");
         }
 
@@ -195,13 +208,13 @@ public class UnityADCAds {
         for (Map.Entry<String, Object> entry : mapCopy.entrySet()) {
             Object o = entry.getValue();
             if (o instanceof Integer) {
-                meta.setMetadata(entry.getKey(), ((Integer)o).doubleValue());
+                meta.setMetadata(entry.getKey(), ((Integer) o).doubleValue());
             } else if (o instanceof String) {
-                meta.setMetadata(entry.getKey(), (String)o);
+                meta.setMetadata(entry.getKey(), (String) o);
             } else if (o instanceof Double) {
-                meta.setMetadata(entry.getKey(), (Double)o);
+                meta.setMetadata(entry.getKey(), (Double) o);
             } else if (o instanceof Boolean) {
-                meta.setMetadata(entry.getKey(), (Boolean)o);
+                meta.setMetadata(entry.getKey(), (Boolean) o);
             }
         }
 
@@ -213,15 +226,15 @@ public class UnityADCAds {
         Map<String, Object> params = UnityADCUtils.jsonToMap(json);
 
         AdColonyAppOptions appOptions = null;
-        Map<String, Object> appOptionsMap = (Map<String, Object>)params.get("app_options");
+        Map<String, Object> appOptionsMap = (Map<String, Object>) params.get("app_options");
         if (appOptionsMap != null) {
             appOptions = getSharedInstance().appOptionsFromMap(appOptionsMap);
             getSharedInstance()._cachedAppOptions = new HashMap<String, Object>(appOptionsMap);
         }
 
-        String appId = (String)params.get("app_id");
+        String appId = (String) params.get("app_id");
 
-        List<String> zoneList = (List<String>)params.get("zone_ids");
+        List<String> zoneList = (List<String>) params.get("zone_ids");
         String[] zones = new String[zoneList.size()];
         int index = 0;
         for (String zone : zoneList) {
@@ -255,12 +268,12 @@ public class UnityADCAds {
         Map<String, Object> params = UnityADCUtils.jsonToMap(json);
 
         AdColonyAdOptions adOptions = null;
-        Map<String, Object> adOptionsMap = (Map<String, Object>)params.get("ad_options");
+        Map<String, Object> adOptionsMap = (Map<String, Object>) params.get("ad_options");
         if (adOptionsMap != null) {
             adOptions = getSharedInstance().adOptionsFromMap(adOptionsMap);
         }
 
-        String zoneId = (String)params.get("zone_id");
+        String zoneId = (String) params.get("zone_id");
 
         UnityADCAdContainer adContainer = new UnityADCAdContainer();
         getSharedInstance()._adContainers.put(adContainer.id, adContainer);
@@ -336,7 +349,7 @@ public class UnityADCAds {
 
                 for (Map.Entry<String, Object> entry : map.entrySet()) {
                     if (entry.getValue() != null && !entry.getValue().equals("null") && entry.getValue().getClass().equals(String.class)) {
-                        hashMap.put(entry.getKey(), (String)entry.getValue());
+                        hashMap.put(entry.getKey(), (String) entry.getValue());
                     }
                 }
 
@@ -346,18 +359,22 @@ public class UnityADCAds {
     }
 
     // Need this extra conversion step because the Java interface uses objects for Integer/Double
-    public static void logTransactionWithID(String itemID, int quantity, double price, String currencyCode, String receipt, String store, String description) {
-        AdColonyEventTracker.logTransaction(itemID, (Integer)quantity, (Double)price, currencyCode, receipt, store, description);
+    public static void logTransactionWithID(String itemID, int quantity, double price,
+                                            String currencyCode, String receipt, String store,
+                                            String description) {
+        AdColonyEventTracker.logTransaction(itemID, quantity, price,
+                currencyCode, receipt, store, description);
     }
 
     // Need this extra conversion step because the Java interface uses objects for Integer/Double
-    public static void logCreditsSpentWithName(String name, int quantity, double val, String currencyCode) {
-        AdColonyEventTracker.logCreditsSpent(name, (Integer)quantity, (double)val, currencyCode);
+    public static void logCreditsSpentWithName(String name, int quantity, double val,
+                                               String currencyCode) {
+        AdColonyEventTracker.logCreditsSpent(name, quantity, val, currencyCode);
     }
 
     // Need this extra conversion step because the Java interface uses objects for Integer
     public static void logLevelAchieved(int level) {
-        AdColonyEventTracker.logLevelAchieved((Integer)level);
+        AdColonyEventTracker.logLevelAchieved(level);
     }
 
     // START Banner AD
@@ -366,28 +383,56 @@ public class UnityADCAds {
         Map<String, Object> params = UnityADCUtils.jsonToMap(json);
 
         AdColonyAdOptions adOptions = null;
-        Map<String, Object> adOptionsMap = params.containsKey("ad_options")?(Map<String, Object>)params.get("ad_options"):null;
+        Map<String, Object> adOptionsMap = params.containsKey("ad_options")
+                ? (Map<String, Object>) params.get("ad_options")
+                : null;
         if (adOptionsMap != null) {
             adOptions = getSharedInstance().adOptionsFromMap(adOptionsMap);
         }
 
-        String zoneId = (String)params.get("zone_id");
-        int adSize = (int)params.get("ad_size");
-        int adPosition = (int)params.get("ad_position");
+        String zoneId = (String) params.get("zone_id");
+        int adSize = (int) params.get("ad_size");
+        int adPosition = (int) params.get("ad_position");
 
         UnityADCAdViewContainer adContainer = new UnityADCAdViewContainer(adPosition);
         getSharedInstance()._adViewContainers.put(adContainer.id, adContainer);
         AdColony.requestAdView(zoneId, adContainer, getAdSize(adSize), adOptions);
     }
 
+    public static void show(final String id) {
+        UnityPlayer.currentActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                UnityADCAdViewContainer adcAdViewContainer =
+                        getSharedInstance()._adViewContainers.get(id);
+                if (adcAdViewContainer != null && adcAdViewContainer.ad != null
+                        && adcAdViewContainer.ad.get_ad() != null) {
+                    adcAdViewContainer.ad.get_ad().setVisibility(View.VISIBLE);
+                }
+            }
+        });
+    }
+
+    public static void hide(final String id) {
+        UnityPlayer.currentActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                UnityADCAdViewContainer adcAdViewContainer =
+                        getSharedInstance()._adViewContainers.get(id);
+                if (adcAdViewContainer != null && adcAdViewContainer.ad != null
+                        && adcAdViewContainer.ad.get_ad() != null) {
+                    adcAdViewContainer.ad.get_ad().setVisibility(View.GONE);
+                }
+            }
+        });
+    }
+
     public static void destroyAdView(String id) {
         destroyNativeAdView(id);
-
     }
 
     private static void destroyNativeAdView(String id) {
         UnityADCAdViewContainer adcAdViewContainer = getSharedInstance()._adViewContainers.get(id);
-        if (adcAdViewContainer!=null && adcAdViewContainer.ad!=null) {
+        if (adcAdViewContainer != null && adcAdViewContainer.ad != null
+                && adcAdViewContainer.ad.get_ad() != null) {
             adcAdViewContainer.ad.get_ad().destroy();
             getSharedInstance()._adViewContainers.remove(id);
         }
@@ -395,15 +440,13 @@ public class UnityADCAds {
 
     private static AdColonyAdSize getAdSize(int adSize) {
         switch (adSize) {
-            case 1:
-                return AdColonyAdSize.BANNER;
             case 2:
                 return AdColonyAdSize.MEDIUM_RECTANGLE;
             case 3:
                 return AdColonyAdSize.LEADERBOARD;
             case 4:
                 return AdColonyAdSize.SKYSCRAPER;
-             default:
+            default:
                 return AdColonyAdSize.BANNER;
         }
     }

@@ -1,14 +1,17 @@
 package com.adcolony.unityplugin;
 
+import com.adcolony.sdk.AdColonyReward;
+import com.adcolony.sdk.AdColonyZone;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import org.json.JSONArray;
-import org.json.JSONObject;
-import org.json.JSONException;
-import com.adcolony.sdk.*;
 
 public class UnityADCUtils {
     static String toJson(Map<String, Object> data) {
@@ -141,17 +144,17 @@ public class UnityADCUtils {
         return UnityADCUtils.toJson(map);
     }
 
-    static String adDetailsToJson(AdColonyZone zone,int position) {
+    static String adDetailsToJson(AdColonyZone zone, int position) {
         Map<String, Object> map = new HashMap<String, Object>();
         if (zone != null) {
             map.put("zone_id", zone.getZoneID());
             map.put("type", zone.getZoneType());
-            map.put("position",Integer.toString(position));
+            map.put("position", Integer.toString(position));
         }
         return UnityADCUtils.toJson(map);
     }
 
-    static String adDetailsToJson(String zone,int position) {
+    static String adDetailsToJson(String zone, int position) {
         Map<String, Object> map = new HashMap<String, Object>();
         if (zone != null) {
             map.put("zone_id", zone);

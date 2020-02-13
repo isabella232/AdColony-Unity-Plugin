@@ -2,7 +2,6 @@ package com.adcolony.unityplugin;
 
 import com.adcolony.sdk.AdColonyAdSize;
 import com.adcolony.sdk.AdColonyAdView;
-import com.adcolony.sdk.AdColonyInterstitial;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -44,12 +43,4 @@ public class UnityADCAdViewAds {
     public AdColonyAdView get_ad() {
         return _ad;
     }
-
-    /*  public boolean show() {
-        return _ad.show();
-    }
-79
-    public void cancel() {
-        _ad.cancel();
-    }*/
 }

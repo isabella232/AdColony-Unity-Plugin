@@ -2,9 +2,9 @@
 ![progress](https://img.shields.io/badge/progress-developing-yellow.svg)
 ![contributions](https://img.shields.io/badge/contributions-welcome-green.svg)
 <br>
-![Unity Version](https://img.shields.io/badge/Unity%20Plugin-4.1.1-808080.svg)
-![Android Version](https://img.shields.io/badge/Android%20SDK-4.1.0-808080.svg)
-![iOS Version](https://img.shields.io/badge/iOS%20SDK-4.1.1-808080.svg)
+![Unity Version](https://img.shields.io/badge/Unity%20Plugin-4.1.3-808080.svg)
+![Android Version](https://img.shields.io/badge/Android%20SDK-4.1.3-808080.svg)
+![iOS Version](https://img.shields.io/badge/iOS%20SDK-4.1.3-808080.svg)
 
 # AdColony SDK Unity Plugin
 - [Requirements](#requirements)
@@ -31,6 +31,11 @@
 AdColony delivers zero-buffering, [full-screen Instant-Play™ HD video](https://www.adcolony.com/technology/instant-play/), [interactive Aurora™ Video](https://www.adcolony.com/technology/auroravideo), and Aurora™ Playable ads that can be displayed anywhere within your application. Our advertising SDK is trusted by the world’s top gaming and non-gaming publishers, delivering them the highest monetization opportunities from brand and performance advertisers. AdColony’s SDK can monetize a wide range of ad formats including in-stream/pre-roll, out-stream/interstitial and V4VC™, a secure system for rewarding users of your app with virtual currency upon the completion of video and playable ads.
 
 # Release Notes
+## v4.1.3.0 (2020/02/13)
+* Updated to AdColony SDK 4.1.3 (iOS) and 4.1.3 (Android).
+* Added show and hide APIs for banner ad.
+* Added destroy ad API for Interstitial ad.
+
 ## v4.1.2.0 (2019/10/24)
 * Updated to AdColony SDK 4.1.2 (iOS).
 * Fixed NPE crash issue in android plugin.
@@ -206,6 +211,21 @@ See the API documentation on how to use the `AppOptions`.
     AdColony.Ads.RequestAdView("zone_id_1", AdColony.AdSize.Banner, null);
     ```
 
+3. Additional APIs to show and hide Banner Ad
+
+  ```csharp
+  //Show the ad view.
+  adView.ShowAdView();
+
+  //Hide the ad view.
+  adView.HideAdView();
+  ```
+
+4. Clean up Banner Ad: When AdColony.AdColonyAdView is no longer used, make sure to call DestroyAdView() method to avoid memory leaks. On the invocation of this method, the plugin will clean up memory occupied by this object:
+    ```csharp
+    adView.DestroyAdView();
+    ```
+
 #### Showing Interstitial Ads
 1. Register for callbacks
 
@@ -241,6 +261,11 @@ See the API documentation on how to use the `AppOptions`.
     if (_ad != null) {
         AdColony.Ads.ShowAd(_ad);
     }
+    ```
+
+4. Clean up Interstitial Ad: When AdColony.InterstitialAd is no longer used, make sure to call DestroyAd() method to avoid memory leaks. On the invocation of this method, the plugin will clean up memory occupied by this object.
+    ```csharp
+    interstitial.DestroyAd();
     ```
 
 #### Showing Rewarded Interstitial Ads

@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
-using System.Collections;
 
-public class Constants : MonoBehaviour {
+public class Constants : MonoBehaviour
+{
 
     // AdColony App ID and Zone IDs.
 #if UNITY_IOS
@@ -23,9 +23,9 @@ public class Constants : MonoBehaviour {
 
     // Game Object Tags.
     public static string GameControllerTag = "GameController";
-	public static string AsteroidConfigureTag = "Asteroid Configure";
-	public static string AsteroidRequestTag = "Asteroid Request";
-	public static string AsteroidPlayTag = "Asteroid Play";
+    public static string AsteroidConfigureTag = "Asteroid Configure";
+    public static string AsteroidRequestTag = "Asteroid Request";
+    public static string AsteroidPlayTag = "Asteroid Play";
     public static string AsteroidAdViewRequest = "Asteroid AdViewRequest";
     public static string AsteroidAdViewDestroy = "Asteroid DestroyAdView";
     public static string RocketTag = "Rocket";

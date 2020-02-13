@@ -1,10 +1,9 @@
 package com.adcolony.unityplugin;
 
-import android.net.Uri;
-import java.util.*;
-import android.util.Log;
-import com.adcolony.sdk.*;
-import java.util.UUID;
+import com.adcolony.sdk.AdColonyInterstitial;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class UnityADCAdsInterstitial {

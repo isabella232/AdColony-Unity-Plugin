@@ -1,9 +1,14 @@
 package com.adcolony.unityplugin;
 
-import android.net.Uri;
-import java.util.*;
 import android.util.Log;
-import com.adcolony.sdk.*;
+
+import com.adcolony.sdk.AdColonyInterstitial;
+import com.adcolony.sdk.AdColonyInterstitialListener;
+import com.adcolony.sdk.AdColonyZone;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.UUID;
 
 public class UnityADCAdContainer extends AdColonyInterstitialListener {
     public String id = UUID.randomUUID().toString();
@@ -21,7 +26,8 @@ public class UnityADCAdContainer extends AdColonyInterstitialListener {
     }
 
     public void onRequestNotFilled(AdColonyZone zone) {
-        UnityADCAds.sendUnityMessage("_OnRequestInterstitialFailed", UnityADCUtils.zoneToJson(zone));
+        UnityADCAds.sendUnityMessage("_OnRequestInterstitialFailed",
+                UnityADCUtils.zoneToJson(zone));
     }
 
     public void onOpened(AdColonyInterstitial ad) {
