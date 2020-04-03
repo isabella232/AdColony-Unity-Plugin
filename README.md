@@ -2,9 +2,9 @@
 ![progress](https://img.shields.io/badge/progress-developing-yellow.svg)
 ![contributions](https://img.shields.io/badge/contributions-welcome-green.svg)
 <br>
-![Unity Version](https://img.shields.io/badge/Unity%20Plugin-4.1.3-808080.svg)
-![Android Version](https://img.shields.io/badge/Android%20SDK-4.1.3-808080.svg)
-![iOS Version](https://img.shields.io/badge/iOS%20SDK-4.1.3-808080.svg)
+![Unity Version](https://img.shields.io/badge/Unity%20Plugin-4.1.4-808080.svg)
+![Android Version](https://img.shields.io/badge/Android%20SDK-4.1.4-808080.svg)
+![iOS Version](https://img.shields.io/badge/iOS%20SDK-4.1.4-808080.svg)
 
 # AdColony SDK Unity Plugin
 - [Requirements](#requirements)
