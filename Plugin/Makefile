@@ -1,5 +1,5 @@
-IOS_REPO_NAME := AdColony-iOS-SDK-3
-ANDROID_REPO_NAME := AdColony-Android-SDK-3
+IOS_REPO_NAME := AdColony-iOS-SDK
+ANDROID_REPO_NAME := AdColony-Android-SDK
 UNITY_PLUGIN_DIR := $(shell pwd)
 SDK_DIR := $(UNITY_PLUGIN_DIR)/src/sdks
 IOS_DIR := $(SDK_DIR)/$(IOS_REPO_NAME)
@@ -9,7 +9,7 @@ ANDROID_FINAL_WRAPPER_DIR := $(UNITY_PLUGIN_DIR)/src/android
 ANDROID_FINAL_WRAPPER_JAR := $(UNITY_PLUGIN_DIR)/src/android/Library/build/outputs/jar/adcolony-wrapper.jar
 UNITY_PACKAGE_FULL_PATH := $(UNITY_PLUGIN_DIR)/AdColony.unitypackage
 UNITY_TEMP_PROJECT_DIR := $(UNITY_PLUGIN_DIR)/tempunitypackage
-UNITY_BINARY := /Applications/Unity/Unity.app/Contents/MacOS/Unity
+UNITY_BINARY := /Applications/Unity/Hub/Editor/2018.4.18f1/Unity.app/Contents/MacOS/Unity
 UNITY_LOG_FILE := $(UNITY_PACKAGE_FULL_PATH).build.log
 PLUGIN_PACKAGE_FULL_PATH := $(UNITY_PLUGIN_DIR)/AdColony.unitypackage
 
