@@ -31,7 +31,7 @@
 AdColony delivers zero-buffering, [full-screen Instant-Play™ HD video](https://www.adcolony.com/technology/instant-play/), [interactive Aurora™ Video](https://www.adcolony.com/technology/auroravideo), and Aurora™ Playable ads that can be displayed anywhere within your application. Our advertising SDK is trusted by the world’s top gaming and non-gaming publishers, delivering them the highest monetization opportunities from brand and performance advertisers. AdColony’s SDK can monetize a wide range of ad formats including in-stream/pre-roll, out-stream/interstitial and V4VC™, a secure system for rewarding users of your app with virtual currency upon the completion of video and playable ads.
 
 # Release Notes
-## v4.1.5.0 (2020/05/26)
+## v4.1.5.0 (2020/05/28)
 * Updated to AdColony SDK 4.1.5 (iOS) and 4.1.4 (Android).
 
 ## v4.1.3.0 (2020/02/13)
