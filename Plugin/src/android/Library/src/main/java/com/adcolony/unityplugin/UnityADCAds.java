@@ -262,6 +262,8 @@ public class UnityADCAds {
                 }
             }
         }, ADC_UNITY_ON_CONFIGURATION_COMPLETED);
+
+        Log.i("UnityADCAds","AdColony SDK Version: "+AdColony.getSDKVersion());
     }
 
     public static void requestInterstitialAd(String json) {
