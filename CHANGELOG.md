@@ -1,4 +1,7 @@
 # Change Log
+## v4.2.0.0 (2020/07/13)
+* Updated to AdColony SDK 4.2.0 (iOS) and 4.2.0 (Android).
+
 ## v4.1.5.0 (2020/05/28)
 * Updated to AdColony SDK 4.1.5 (iOS) and 4.1.4 (Android).
 
