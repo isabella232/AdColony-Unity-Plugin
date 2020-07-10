@@ -61,6 +61,50 @@ namespace AdColony
             _data[key] = value;
         }
 
+        public void SetPrivacyFrameworkRequired(string type, bool value)
+        {
+            if (type == null)
+            {
+                Debug.Log("Invalid option type.");
+                return;
+            }
+
+            _data[type + "_required"] = value;
+        }
+
+        public void SetPrivacyConsentString(string type, string value)
+        {
+            if (type == null)
+            {
+                Debug.Log("Invalid option type.");
+                return;
+            }
+
+            _data[type + "_consent_string"] = value;
+        }
+
+        public string GetPrivacyFrameworkRequired(string type)
+        {
+            if (type == null)
+            {
+                Debug.Log("Invalid option type.");
+                return null;
+            }
+
+            return _data.ContainsKey(type + "_required") ? _data[type] as string : null;
+        }
+
+        public string GetPrivacyConsentString(string type)
+        {
+            if (type == null)
+            {
+                Debug.Log("Invalid option type.");
+                return null;
+            }
+            
+            return _data.ContainsKey(type + "_consent_string") ? _data[type] as string : null;
+        }
+
         /// <summary>
         /// Sets a supported option.
         /// Use this method to set a string-based option with an arbitrary, numerial value.
@@ -196,6 +240,10 @@ namespace AdColony
     // -------------------------------------------------------------------------
     public class AppOptions : Options
     {
+        public static string CCPA = "CCPA";
+        public static string GDPR = "GDPR";
+        public static string COPPA = "COPPA";
+
         private bool _disableLogging;
         /// <summary>
         /// Disables AdColony logging.
@@ -240,6 +288,7 @@ namespace AdColony
         /// Set this property to configure the desired orientation for your ads.
         /// </summary>
         /// <see creg="ADCOrientation" />
+        [Obsolete("AdOrientation is deprecated")]
         public AdOrientationType AdOrientation
         {
             get
@@ -312,6 +361,7 @@ namespace AdColony
         /// This is to inform the AdColony service if GDPR should be considered for the user based on if they are they EU citizens or from EU territories. Default is FALSE.
         /// This is for GDPR compliance, see https://www.adcolony.com/gdpr/
         /// </summary>
+        [Obsolete("GdprRequired is deprecated, please use SetPrivacyFrameworkRequired/GetPrivacyFrameworkRequired instead.")]
         public bool GdprRequired
         {
             get
@@ -330,6 +380,7 @@ namespace AdColony
         /// Defines end user's consent for information collected from the user.
         /// The IAB Europe Transparency and Consent framework defines standard APIs and formats for communicating between Consent Management Platforms (CMPs) collecting consents from end users and vendors embedded on a website or in a mobile application. It provides a unified interface for a seamless integration where CMPs and vendors do not have to integrate manually with hundreds of partners. This is for GDPR compliance through IAB, see https://github.com/InteractiveAdvertisingBureau/GDPR-Transparency-and-Consent-Framework/blob/master/v1.1%20Implementation%20Guidelines.md#vendors
         /// </summary>
+        [Obsolete("GdprRequired is deprecated, please use SetPrivacyConsentString/GetPrivacyConsentString instead.")]
         public string GdprConsentString
         {
             get

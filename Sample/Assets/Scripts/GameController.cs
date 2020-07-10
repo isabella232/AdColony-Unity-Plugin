@@ -187,7 +187,6 @@ public class GameController : MonoBehaviour
         appOptions.UserId = "foo";
         appOptions.AdOrientation = AdColony.AdOrientationType.AdColonyOrientationAll;
         appOptions.SetOption("test_key", "Happy Fun Time!");
-
         AdColony.UserMetadata metadata = new AdColony.UserMetadata();
         metadata.Age = 35;
         metadata.Gender = "Male";
@@ -200,6 +199,14 @@ public class GameController : MonoBehaviour
         metadata.EducationLevel = "Bachelors";
         metadata.SetMetadata("test_key_02", "Happy Meta Time?");
         appOptions.Metadata = metadata;
+
+        appOptions.SetPrivacyConsentString(AdColony.AppOptions.GDPR, "YES");
+        appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.GDPR, true);
+
+        appOptions.SetPrivacyConsentString(AdColony.AppOptions.CCPA, "YES");
+        appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.CCPA, true);
+
+        appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.COPPA, true);    
 
         string[] zoneIDs = new string[] { Constants.InterstitialZoneID, Constants.AdViewZoneID, Constants.CurrencyZoneID };
         //string[] zoneIDs = new string[] { Constants.AdViewZoneID };

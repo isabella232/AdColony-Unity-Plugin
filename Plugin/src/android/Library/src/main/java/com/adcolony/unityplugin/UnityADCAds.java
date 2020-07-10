@@ -43,6 +43,8 @@ public class UnityADCAds {
     private static final String ADC_UNITY_ON_CONFIGURATION_COMPLETED = "AdColony" +
             ".on_configuration_completed";
 
+    private static final String CONSENT_STRING = "_consent_string";
+    private static final String CONSENT_REQUIRED = "_required";
     static synchronized UnityADCAds getSharedInstance() {
         if (_sharedInstance == null) {
             _sharedInstance = new UnityADCAds();
@@ -112,7 +114,13 @@ public class UnityADCAds {
         // Add all the remaining keys
         for (Map.Entry<String, Object> entry : mapCopy.entrySet()) {
             Object o = entry.getValue();
-            if (o instanceof Integer) {
+            if (entry.getKey().contains(CONSENT_STRING)) {
+                Log.i("Consent_UnityADCAds","Key: "+entry.getKey().split("_")[0]+" Value: "+ mapCopy.get(entry.getKey()));
+                options.setPrivacyConsentString(entry.getKey().split("_")[0], (String) mapCopy.get(entry.getKey()));
+            } else if (entry.getKey().contains(CONSENT_REQUIRED)) {
+                Log.i("Consent_UnityADCAds","Key: "+entry.getKey().split("_")[0]+" Value: "+ mapCopy.get(entry.getKey()));
+                options.setPrivacyFrameworkRequired(entry.getKey().split("_")[0], (Boolean) mapCopy.get(entry.getKey()));
+            } else if (o instanceof Integer) {
                 options.setOption(entry.getKey(), ((Integer) o).doubleValue());
             } else if (o instanceof String) {
                 options.setOption(entry.getKey(), (String) o);
@@ -122,6 +130,7 @@ public class UnityADCAds {
                 options.setOption(entry.getKey(), (Boolean) o);
             }
         }
+         mapCopy.clear();
 
         return options;
     }
