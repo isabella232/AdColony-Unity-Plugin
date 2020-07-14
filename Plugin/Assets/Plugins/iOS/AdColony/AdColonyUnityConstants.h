@@ -54,5 +54,5 @@
 #define ADC_ON_CUSTOM_MESSAGE_RECEIVED_MESSAGE_KEY @"message"
 
 //Privacy Laws Keys
-#define ADC_CONSENT_STRING @"_consent_string"
-#define ADC_CONSENT_REQUIRED @"_required"
+#define ADC_CONSENT_STRING @"_adc_consent_string"
+#define ADC_CONSENT_REQUIRED @"_adc_required"

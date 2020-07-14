@@ -55,14 +55,15 @@
         if (obj) {
             if ([key containsString:ADC_CONSENT_STRING]) {
                 NSString *string = (NSString *)obj;
-                NSArray *arrayOfComponents = [key componentsSeparatedByString:@"_"];
-                NSLog(@"Consent_ADCUNITY: %@ %@",arrayOfComponents[0],string);
+                NSArray *arrayOfComponents = [key componentsSeparatedByString:ADC_CONSENT_STRING];               
                 [self setPrivacyConsentString:string forType:arrayOfComponents[0]];
             } else if ([key containsString:ADC_CONSENT_REQUIRED]) {
-                NSNumber *number = (NSNumber *)obj;
-                NSArray *arrayOfComponents = [key componentsSeparatedByString:@"_"];
-                NSLog(@"Consent_ADCUNITY: %@ %@",arrayOfComponents[0],number);
-                [self setPrivacyFrameworkOfType:arrayOfComponents[0] isRequired:number];
+                NSArray *arrayOfComponents = [key componentsSeparatedByString:ADC_CONSENT_REQUIRED];
+                if([obj boolValue] == 1 || [obj boolValue] == YES) {
+                    [self setPrivacyFrameworkOfType:arrayOfComponents[0] isRequired:true];
+                } else {
+                    [self setPrivacyFrameworkOfType:arrayOfComponents[0] isRequired:false];
+                }
             } else if ([obj isKindOfClass:[NSString class]]) {
                 NSString *string = (NSString *)obj;
                 if ([key isEqualToString:ADC_APPOPTIONS_USER_ID_KEY]) {
