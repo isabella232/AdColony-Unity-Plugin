@@ -12,12 +12,7 @@ public class GameController : MonoBehaviour
     AdColony.AdColonyAdView adView;
     AdColony.InterstitialAd Ad = null;
     ArrayList arrayList = new ArrayList();
-
-    public const string YES = "1";
-    public const string NO = "0";
-
     static int counter = 0;
-
     float currencyPopupTimer = 0.0f;
 
     void Start()
@@ -189,6 +184,7 @@ public class GameController : MonoBehaviour
         appOptions.UserId = "foo";
         appOptions.AdOrientation = AdColony.AdOrientationType.AdColonyOrientationAll;
         appOptions.SetOption("test_key", "Happy Fun Time!");
+
         AdColony.UserMetadata metadata = new AdColony.UserMetadata();
         metadata.Age = 35;
         metadata.Gender = "Male";
@@ -202,21 +198,21 @@ public class GameController : MonoBehaviour
         metadata.SetMetadata("test_key_02", "Happy Meta Time?");
         appOptions.Metadata = metadata;
 
-        appOptions.SetPrivacyConsentString(AdColony.AppOptions.GDPR, YES);
+        appOptions.SetPrivacyConsentString(AdColony.AppOptions.GDPR, "1");
         appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.GDPR, true);
 
-        appOptions.SetPrivacyConsentString(AdColony.AppOptions.CCPA, NO);
-        appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.CCPA, true);
+        appOptions.SetPrivacyConsentString(AdColony.AppOptions.CCPA, "0");
+        appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.CCPA, false);
 
         appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.COPPA, true);
-
-        appOptions.SetPrivacyConsentString("test_consent_string", NO);
-        appOptions.SetPrivacyFrameworkRequired("test_required", true);
 
         string[] zoneIDs = new string[] { Constants.InterstitialZoneID, Constants.AdViewZoneID, Constants.CurrencyZoneID };
         //string[] zoneIDs = new string[] { Constants.AdViewZoneID };
 
         AdColony.Ads.Configure(Constants.AppID, appOptions, zoneIDs);
+
+      
+
     }
 
     void RequestAd()

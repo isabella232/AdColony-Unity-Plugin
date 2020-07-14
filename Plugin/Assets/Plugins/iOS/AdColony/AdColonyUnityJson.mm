@@ -59,7 +59,7 @@
                 [self setPrivacyConsentString:string forType:arrayOfComponents[0]];
             } else if ([key containsString:ADC_CONSENT_REQUIRED]) {
                 NSArray *arrayOfComponents = [key componentsSeparatedByString:ADC_CONSENT_REQUIRED];
-                if([obj boolValue] == 1 || [obj boolValue] == YES) {
+                if([obj boolValue] == YES) {
                     [self setPrivacyFrameworkOfType:arrayOfComponents[0] isRequired:true];
                 } else {
                     [self setPrivacyFrameworkOfType:arrayOfComponents[0] isRequired:false];

@@ -89,15 +89,15 @@ namespace AdColony
             _data[type + Constants.CONSENT_STRING] = value;
         }
 
-        public string GetPrivacyFrameworkRequired(string type)
+        public bool GetPrivacyFrameworkRequired(string type)
         {
             if (type == null)
             {
                 Debug.Log("Invalid option type.");
-                return null;
+                return false;
             }
 
-            return _data.ContainsKey(type + Constants.CONSENT_REQUIRED) ? _data[type] as string : null;
+            return _data.ContainsKey(type + Constants.CONSENT_REQUIRED) ? (bool)_data[type + Constants.CONSENT_REQUIRED] : false;
         }
 
         public string GetPrivacyConsentString(string type)
@@ -107,8 +107,8 @@ namespace AdColony
                 Debug.Log("Invalid option type.");
                 return null;
             }
-            
-            return _data.ContainsKey(type + Constants.CONSENT_STRING) ? _data[type] as string : null;
+
+            return _data.ContainsKey(type + Constants.CONSENT_STRING) ? _data[type + Constants.CONSENT_STRING] as string : null;
         }
 
         /// <summary>
