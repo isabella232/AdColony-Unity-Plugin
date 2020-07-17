@@ -65,9 +65,12 @@
         public static string AdsMessageErrorUnableToRebuildAd = "Error, unable to rebuild ad";
         public static string AdsMessageErrorInvalidImplementation = "Error, platform-specific implementation not set";
 
-        public const string AdapterVersion = "4.1.5";
-        public const string AndroidSDKVersion = "4.1.4";
-        public const string iOSSDKVersion = "4.1.5";
+        public static string CONSENT_STRING = "_adc_consent_string";
+        public static string CONSENT_REQUIRED = "_adc_required";
+
+        public const string AdapterVersion = "4.2.0";
+        public const string AndroidSDKVersion = "4.2.0";
+        public const string iOSSDKVersion = "4.2.0";
     }
 
     public class PIEConstants

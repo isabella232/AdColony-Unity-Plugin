@@ -2,9 +2,9 @@
 ![progress](https://img.shields.io/badge/progress-developing-yellow.svg)
 ![contributions](https://img.shields.io/badge/contributions-welcome-green.svg)
 <br>
-![Unity Version](https://img.shields.io/badge/Unity%20Plugin-4.1.5-808080.svg)
-![Android Version](https://img.shields.io/badge/Android%20SDK-4.1.4-808080.svg)
-![iOS Version](https://img.shields.io/badge/iOS%20SDK-4.1.5-808080.svg)
+![Unity Version](https://img.shields.io/badge/Unity%20Plugin-4.2.0-808080.svg)
+![Android Version](https://img.shields.io/badge/Android%20SDK-4.2.0-808080.svg)
+![iOS Version](https://img.shields.io/badge/iOS%20SDK-4.2.0-808080.svg)
 
 # AdColony SDK Unity Plugin
 - [Requirements](#requirements)
@@ -31,6 +31,9 @@
 AdColony delivers zero-buffering, [full-screen Instant-Play™ HD video](https://www.adcolony.com/technology/instant-play/), [interactive Aurora™ Video](https://www.adcolony.com/technology/auroravideo), and Aurora™ Playable ads that can be displayed anywhere within your application. Our advertising SDK is trusted by the world’s top gaming and non-gaming publishers, delivering them the highest monetization opportunities from brand and performance advertisers. AdColony’s SDK can monetize a wide range of ad formats including in-stream/pre-roll, out-stream/interstitial and V4VC™, a secure system for rewarding users of your app with virtual currency upon the completion of video and playable ads.
 
 # Release Notes
+## v4.2.0.0 (2020/07/17)
+* Updated to AdColony SDK 4.2.0 (iOS) and 4.2.0 (Android).
+
 ## v4.1.5.0 (2020/05/28)
 * Updated to AdColony SDK 4.1.5 (iOS) and 4.1.4 (Android).
 
@@ -332,20 +335,66 @@ Note: for more details on the AdColony Android setup, please refer to [AdColony 
 In compliance with the European Union's General Data Protection Regulation (GDPR), if you are collecting consent from your users, you can make use of APIs discussed below to inform AdColony and all downstream consumers of this information. Please see our [GDPR FAQ](https://www.adcolony.com/gdpr/) for more information.
 
 ### Passing Consent via AppOptions
-In the AdColony SDK Unity plugin v3.3.4, we added explicit methods to our AppOptions API for GDPR compliance. You may use any combinations of these options. We require the GDPR consent string to have a value of "1" or "0". A value of "1" implies the user has given consent to store and process personal information and a value of "0" means the user has declined consent.
+In the Android SDK v4.2, we've modified the existing methods available to our AdColonyAppOptions API for additional support in GDPR compliance. We’ve also added support for version 2.0 of the IAB Transparency and Consent Framework (TCF).
+
+We require the GDPR consent string to have a value of "1" or "0". A value of "1" implies the user has given consent to store and process personal information and a value of "0" means the user has declined consent.
 
 #### Example Code
 ```csharp
-AdColony.AppOptions options = new AdColony.AppOptions();
+AdColony.AppOptions appOptions = new AdColony.AppOptions();
 
-// Indicates the GDPR requirement of the user.
-// If it's true, the user's subject to the GDPR laws.
-// If you set it to false, the value of consent string will be ignored.
-options.GdprRequired = true;
+// The value passed via setPrivacyFrameworkRequired() will determine the GDPR requirement of
+// the user. If it's set to true, the user is subject to the GDPR laws.
+appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.GDPR, true);
+
+// Your user's consent String. In this case, the user has given consent to store
+// and process personal information. This value may be either O, 1, or an IAB consent string.
+appOptions.SetPrivacyConsentString(AdColony.AppOptions.GDPR, "1");
+
+AdColony.Ads.Configure(APP_ID, appOptions, ZONE_IDS);
+```
+
+# CCPA
+
+This documentation is provided for compliance with the California Consumer Privacy Act (CCPA). In order to pass CCPA opt-outs from your users, you should make use of the APIs discussed below to inform AdColony and all downstream consumers of this information. Please see our [CCPA FAQ](https://www.adcolony.com/consumer-privacy/) for more information.
+
+### Passing Consent via AppOptions
+In the Android SDK v4.2, we added generic privacy methods to our AdColonyAppOptions API for additional support in CCPA compliance. To successfully pass us an opt-out signal, the publisher will need to provide AdColony a signal to indicate whether CCPA legislation is applicable to the user in addition to the actual consent value.
+
+A value of "1" or "0"
+A value of "1" implies the user has not opted-out to the sale of their data, as defined by the CCPA, and AdColony should continue with our standard processing of user information. A value of "0" means the user has opted-out to the sale of their data.
+
+#### Example Code
+```csharp
+AdColony.AppOptions appOptions = new AdColony.AppOptions();
+
+// The value passed via setPrivacyFrameworkRequired() will indicate to AdColony whether CCPA is applicable legislation for the user.
+// If it's set to true, the user is subject to the CCPA. Note that IAB US Privacy String has information embedded into the string to
+// indicate whether CCPA is applicable. In the event of conflicting signals between the IAB US Privacy String and setPrivacyFrameworkRequired(),
+// we will interpret as CCPA being applicable.
+appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.CCPA, true);
 
 // Your user's consent string.
-// In this case, the user has given consent to store and process personal information.
-options.GdprConsentString = "1";
+// In this case, the user has not opted-out to the sale of their information.
+appOptions.SetPrivacyConsentString(AdColony.AppOptions.CCPA, "1");
+
+AdColony.Ads.Configure(APP_ID, appOptions, ZONE_IDS);
+```
+
+# COPPA
+
+This documentation is provided for additional compliance with the Children’s Online Privacy Protection Act (COPPA). Publishers may designate all inventory within their applications as being child-directed or as COPPA-applicable though our UI. Publishers who have knowledge of specific individuals as being COPPA-applicable should make use of the API discussed below to inform AdColony and all downstream consumers of this information. Please see our privacy policy for more information regarding AdColony and COPPA.
+
+### Passing Consent via AppOptions
+In the Android SDK v4.2, we added generic privacy methods to our AdColonyAppOptions API to designate specific users as being COPPA-applicable.
+
+#### Example Code
+```csharp
+AdColony.AppOptions appOptions = new AdColony.AppOptions();
+
+// The value passed via setPrivacyFrameworkRequired() will determine whether COPPA is applicable for the user.
+// If it's set to true, AdColony will behave with the understanding COPPA is applicable for the user.
+appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.COPPA, true);
 
 AdColony.Ads.Configure(APP_ID, appOptions, ZONE_IDS);
 ```
