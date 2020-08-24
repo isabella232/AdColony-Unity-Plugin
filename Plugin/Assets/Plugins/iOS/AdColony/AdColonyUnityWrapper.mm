@@ -193,12 +193,13 @@ typedef enum : NSInteger {
             size = kAdColonyAdSizeBanner;
             break;
     }
-    
-   UIViewController *viewController = GetAppController().rootViewController;
-   [AdColony requestAdViewInZone:zoneId withSize:size viewController:viewController andDelegate:self];
+
+    UIViewController *viewController = GetAppController().rootViewController;
+    [AdColony requestAdViewInZone:zoneId withSize:size andOptions:adOptions viewController:viewController andDelegate:self];
 }
 
 - (void)destroyAdView {
+
     if (self.adView) {
         [self.adView destroy];
         self.adView = nil;
