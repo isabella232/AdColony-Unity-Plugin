@@ -38,7 +38,11 @@ namespace AdColony.Editor
             PBXProject project = new PBXProject();
             project.ReadFromString(File.ReadAllText(projectPath));
 
+#if UNITY_2019_4_OR_NEWER
+            string targetId = project.GetUnityFrameworkTargetGuid();
+#else
             string targetId = project.TargetGuidByName(PBXProject.GetUnityTargetName());
+#endif
 
             // Required Frameworks
             project.AddFrameworkToProject(targetId, "AdSupport.framework", false);

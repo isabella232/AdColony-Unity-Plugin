@@ -21,7 +21,11 @@ public class ADCUnityPostBuildProcessor {
 		PBXProject project = new PBXProject();
 		project.ReadFromString(File.ReadAllText(projectPath));
 
-		string targetId = project.TargetGuidByName(PBXProject.GetUnityTargetName());
+#if UNITY_2019_4_OR_NEWER
+        string targetId = project.GetUnityFrameworkTargetGuid();
+#else
+        string targetId = project.TargetGuidByName(PBXProject.GetUnityTargetName());
+#endif
 
 		// Other Linker Flags - The SDK in the sample app needs this to work.
 		project.AddBuildProperty(targetId, "OTHER_LDFLAGS", "-ObjC");

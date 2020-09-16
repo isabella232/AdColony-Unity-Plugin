@@ -68,8 +68,8 @@
         public static string CONSENT_STRING = "_adc_consent_string";
         public static string CONSENT_REQUIRED = "_adc_required";
 
-        public const string AdapterVersion = "4.3.1";
-        public const string AndroidSDKVersion = "4.2.2";
+        public const string AdapterVersion = "4.3.2";
+        public const string AndroidSDKVersion = "4.2.4";
         public const string iOSSDKVersion = "4.3.1";
     }
 
