@@ -21,7 +21,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
-    implementation 'com.adcolony:sdk:4.2.3'
+    implementation 'com.adcolony:sdk:4.2.4'
 }
 
 task clearJar(type: Delete) {

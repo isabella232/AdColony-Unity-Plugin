@@ -1,4 +1,7 @@
 # Change Log
+## v4.4.0.0 (2020/09/28)
+* Updated to AdColony SDK 4.4.0(iOS).
+
 ## v4.3.2.0 (2020/09/16)
 * Fixed build issue for unity v2019 and greater.
 * Updated to AdColony SDK 4.2.4(Android).
