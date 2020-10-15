@@ -68,9 +68,9 @@
         public static string CONSENT_STRING = "_adc_consent_string";
         public static string CONSENT_REQUIRED = "_adc_required";
 
-        public const string AdapterVersion = "4.4.0";
-        public const string AndroidSDKVersion = "4.2.4";
-        public const string iOSSDKVersion = "4.4.0";
+        public const string AdapterVersion = "4.4.1";
+        public const string AndroidSDKVersion = "4.3.0";
+        public const string iOSSDKVersion = "4.4.1";
     }
 
     public class PIEConstants
@@ -95,6 +95,8 @@
         public static string ADCEventLogin = "login";
         public static string ADCEventReservation = "reservation";
         public static string ADCEventSearch = "search";
+        public static string ADCEventAdImpression = "ad_impression";
+        public static string ADCEventAppOpen = "app_open";
 
         /// Post Install Custom Event Slots
         public static string ADCCustomEventSlot1 = "ADCT_CUSTOM_EVENT_1";

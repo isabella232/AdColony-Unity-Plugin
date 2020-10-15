@@ -45,6 +45,7 @@ public class UnityADCAds {
 
     private static final String CONSENT_STRING = "_adc_consent_string";
     private static final String CONSENT_REQUIRED = "_adc_required";
+
     static synchronized UnityADCAds getSharedInstance() {
         if (_sharedInstance == null) {
             _sharedInstance = new UnityADCAds();
@@ -128,7 +129,7 @@ public class UnityADCAds {
                 options.setOption(entry.getKey(), (Boolean) o);
             }
         }
-         mapCopy.clear();
+        mapCopy.clear();
 
         return options;
     }
@@ -270,7 +271,7 @@ public class UnityADCAds {
             }
         }, ADC_UNITY_ON_CONFIGURATION_COMPLETED);
 
-        Log.i("UnityADCAds","AdColony SDK Version: "+AdColony.getSDKVersion());
+        Log.i("UnityADCAds", "AdColony SDK Version: " + AdColony.getSDKVersion());
     }
 
     public static void requestInterstitialAd(String json) {
@@ -384,6 +385,78 @@ public class UnityADCAds {
     // Need this extra conversion step because the Java interface uses objects for Integer
     public static void logLevelAchieved(int level) {
         AdColonyEventTracker.logLevelAchieved(level);
+    }
+
+    public static void logPaymentInfoAdded() {
+        AdColonyEventTracker.logPaymentInfoAdded();
+    }
+
+    public static void logAppRated() {
+        AdColonyEventTracker.logAppRated();
+    }
+
+    public static void logActivated() {
+        AdColonyEventTracker.logActivated();
+    }
+
+    public static void logTutorialCompleted() {
+        AdColonyEventTracker.logTutorialCompleted();
+    }
+
+    public static void logCheckoutInitiated() {
+        AdColonyEventTracker.logCheckoutInitiated();
+    }
+
+    public static void logInvite() {
+        AdColonyEventTracker.logInvite();
+    }
+
+    public static void logReservation() {
+        AdColonyEventTracker.logReservation();
+    }
+
+    public static void logAdImpression() {
+        AdColonyEventTracker.logAdImpression();
+    }
+
+    public static void logAppOpen() {
+        AdColonyEventTracker.logAppOpen();
+    }
+
+    public static void logAchievementUnlocked(String description) {
+        AdColonyEventTracker.logAchievementUnlocked(description);
+    }
+
+    public static void logSocialSharingEvent(String network, String description) {
+        AdColonyEventTracker.logSocialSharingEvent(network, description);
+    }
+
+    public static void logRegistrationCompleted(String method, String description) {
+        AdColonyEventTracker.logRegistrationCompleted(method, description);
+    }
+
+    public static void logCustomEvent(String eventName, String description) {
+        AdColonyEventTracker.logCustomEvent(eventName, description);
+    }
+
+    public static void logAddToCart(String itemID) {
+        AdColonyEventTracker.logAddToCart(itemID);
+    }
+
+    public static void logAddToWishlist(String itemID) {
+        AdColonyEventTracker.logAddToWishlist(itemID);
+    }
+
+    public static void logContentView(String contentID, String contentType) {
+        AdColonyEventTracker.logContentView(contentID, contentType);
+    }
+
+    public static void logLogin(String method) {
+        AdColonyEventTracker.logLogin(method);
+    }
+
+    public static void logSearch(String queryString) {
+        AdColonyEventTracker.logSearch(queryString);
     }
 
     // START Banner AD

@@ -1,4 +1,9 @@
 # Change Log
+## v4.4.1.0 (2020/10/15)
+* Fixed banner ad on fail callback issue.
+* Added support logAdImpression and logAppOpen PI events
+* Updated to AdColony SDK 4.4.1 (iOS) and 4.3.0 (Android).
+
 ## v4.4.0.0 (2020/09/28)
 * Updated to AdColony SDK 4.4.0(iOS).
 

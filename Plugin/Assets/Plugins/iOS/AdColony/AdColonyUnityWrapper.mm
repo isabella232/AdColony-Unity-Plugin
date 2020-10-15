@@ -80,7 +80,7 @@ NSString *getGUID() {
              @"expired": @(self.expired),
              @"audio_enabled": @(self.audioEnabled),
              @"iap_enabled": @(self.iapEnabled)};
-
+    
 }
 
 - (NSString *)serializeForUnityWithId:(NSString *)adId {
@@ -168,13 +168,13 @@ typedef enum : NSInteger {
 - (void)requestAdViewInZone:(NSString *)zoneId withSize:(NSInteger)adSize location:(NSInteger)adLocation andOptions:(NSString *)adOptionsJson {
     self.zoneID = zoneId;
     self.adViewLocation = adLocation;
-
+    
     AdColonyAdOptions *adOptions = nil;
     if (adOptionsJson.length) {
         adOptions = [[AdColonyAdOptions alloc] init];
         [adOptions setupWithJson:adOptionsJson];
     }
-
+    
     AdColonyAdSize size;
     switch (adSize) {
         case 1:
@@ -193,13 +193,13 @@ typedef enum : NSInteger {
             size = kAdColonyAdSizeBanner;
             break;
     }
-
+    
     UIViewController *viewController = GetAppController().rootViewController;
     [AdColony requestAdViewInZone:zoneId withSize:size andOptions:adOptions viewController:viewController andDelegate:self];
 }
 
 - (void)destroyAdView {
-
+    
     if (self.adView) {
         [self.adView destroy];
         self.adView = nil;
@@ -261,7 +261,7 @@ typedef enum : NSInteger {
     UnityAppController* unityAppController = GetAppController();
     CGFloat centeredX = (unityAppController.rootView.bounds.size.width - adView.bounds.size.width) / 2;
     CGFloat centeredY = (unityAppController.rootView.bounds.size.height - adView.bounds.size.height) / 2;
-
+    
     switch (self.adViewLocation) {
         case AdViewLocationTop:
             frame = CGRectMake(centeredX, 0, adView.bounds.size.width, adView.bounds.size.height);
@@ -292,7 +292,7 @@ typedef enum : NSInteger {
         default:
             break;
     }
-
+    
     return frame;
 }
 
@@ -311,15 +311,15 @@ void _AdcSetManagerNameAds(const char *managerName, const char *adapterVersion) 
 
 void _AdcConfigure(const char *appId_, const char *appOptionsJson_, int zoneIdsCount_, const char *zoneIds_[]) {
     NSString *appId = GetStringParamOrNil(appId_);
-
+    
     NSMutableArray *zoneIds = @[].mutableCopy;
     for (int i = 0; i < zoneIdsCount_; ++i) {
         [zoneIds addObject:GetStringParamOrNil(zoneIds_[i])];
     }
-
+    
     NSString *appOptionsJson = GetStringParamOrNil(appOptionsJson_);
     [AdcAdsUnityController sharedInstance].appOptionsJson = appOptionsJson;
-
+    
     // SDK-40 appOptions can no longer be nil all the time; the metadata
     // regarding the plugin must be set now
     AdColonyAppOptions *appOptions = [[AdColonyAppOptions alloc] init];
@@ -328,14 +328,14 @@ void _AdcConfigure(const char *appId_, const char *appOptionsJson_, int zoneIdsC
     }
     [appOptions setPlugin:ADCUnity];
     [appOptions setPluginVersion:[AdcAdsUnityController sharedInstance].adapterVersion];
-
-
-
+    
+    
+    
     [AdColony configureWithAppID:appId zoneIDs:zoneIds options:appOptions completion:^(NSArray<AdColonyZone *> *zones) {
         NSMutableArray *zoneJsonArray = [NSMutableArray array];
         for (AdColonyZone *zone in zones) {
             [zoneJsonArray addObject:[zone toJsonString]];
-
+            
             if (zone.rewarded) {
                 // For each zone returned that is also a rewarded zone, register a callback that will then call _OnRewardGranted.
                 NSString *zoneID = zone.identifier;
@@ -348,7 +348,7 @@ void _AdcConfigure(const char *appId_, const char *appOptionsJson_, int zoneIdsC
                 }];
             }
         }
-
+        
         [AdcAdsUnityController sendUnityMessage:[zoneJsonArray toJsonString] toMethod:"_OnConfigure"];
     }];
 }
@@ -392,15 +392,15 @@ void _AdcRequestInterstitialAd(const char *zoneId, const char *adOptionsJson) {
         adOptions = [[AdColonyAdOptions alloc] init];
         [adOptions setupWithJson:myAdOptionsJson];
     }
-
+    
     NSString *zoneIds = GetStringParam(zoneId);
-
+    
     [AdColony requestInterstitialInZone:zoneIds
                                 options:adOptions
                                 success:^(AdColonyInterstitial *ad) {
         NSString *adId = getGUID();
         [AdcAdsUnityController sharedInstance].interstitialAds[adId] = ad;
-
+        
         weakify(ad);
         [ad setOpen:^{
             strongify(ad);
@@ -438,7 +438,7 @@ void _AdcRequestInterstitialAd(const char *zoneId, const char *adOptionsJson) {
             [mutableDict setObject:@((int)engagement) forKey:ADC_ON_IAP_OPPORTUNITY_ENGAGEMENT_KEY];
             [AdcAdsUnityController sendUnityMessage:[mutableDict toJsonString] toMethod:"_OnIAPOpportunity"];
         }];
-
+        
         [AdcAdsUnityController sendUnityMessage:[ad serializeForUnityWithId:adId] toMethod:"_OnRequestInterstitial"];
     }
                                 failure:^(AdColonyAdRequestError *error) {
@@ -486,12 +486,12 @@ const char *_AdcGetZone(const char *zoneId) {
     if (zoneString == nil) {
         return nil;
     }
-
+    
     AdColonyZone *zone = [AdColony zoneForID:zoneString];
     if (zone == nil) {
         return nil;
     }
-
+    
     return MakeStringCopy([zone toJsonString]);
 }
 
@@ -501,7 +501,7 @@ const char *_AdcGetUserID() {
 
 void _AdcSetAppOptions(const char *appOptionsJson) {
     [AdcAdsUnityController sharedInstance].appOptionsJson = GetStringParam(appOptionsJson);
-
+    
     AdColonyAppOptions *appOptions = [[AdColonyAppOptions alloc] init];
     [appOptions setupWithJson:[AdcAdsUnityController sharedInstance].appOptionsJson];
     [AdColony setAppOptions:appOptions];
@@ -625,4 +625,13 @@ void _AdcLogEvent(const char *name, const char *dataAsJson) {
         [AdColonyEventTracker logEvent:GetStringParamOrNil(name) withDictionary:[dict mutableCopy]];
     }
 }
+
+void _AdcLogImpressionn() {
+    [AdColonyEventTracker logAdImpression];
+};
+
+void _AdcLogOpen() {
+    [AdColonyEventTracker logAppOpen];
+}
+
 }
