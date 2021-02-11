@@ -25,13 +25,8 @@ public class UnityADCAdViewContainer extends AdColonyAdViewListener {
     @Override
     public void onRequestFilled(AdColonyAdView adColonyAdView) {
         this.ad = new UnityADCAdViewAds(adColonyAdView, id, adPosition);
-        if (isAdViewAdded()) {
-            UnityADCAds.sendUnityMessage("_OnAdColonyAdViewLoaded", this.ad.toJson());
-        } else {
-            UnityADCAds.sendUnityMessage("_OnAdColonyAdViewFailedToLoad",
-                    UnityADCUtils.adDetailsToJson(adColonyAdView.getZoneId(), adPosition));
-            UnityADCAds.destroyAdView(id);
-        }
+        addAdViewToLayout();
+        UnityADCAds.sendUnityMessage("_OnAdColonyAdViewLoaded", this.ad.toJson());
     }
 
     protected void finalize() throws Throwable {
@@ -84,8 +79,12 @@ public class UnityADCAdViewContainer extends AdColonyAdViewListener {
         UnityADCAds.destroyAdView(id);
     }
 
-    boolean isAdViewAdded() {
-        if (this.ad != null) {
+    boolean isAdViewCreated() {
+        return this.ad != null;
+    }
+
+    private void addAdViewToLayout() {
+        if (isAdViewCreated()) {
             FrameLayout.LayoutParams adContainerParams = new FrameLayout.LayoutParams(-2, -2);
             switch (this.ad.getAdPosition()) {
                 case 0:
@@ -112,8 +111,6 @@ public class UnityADCAdViewContainer extends AdColonyAdViewListener {
 
             Activity activity = UnityPlayer.currentActivity;
             activity.addContentView(this.ad.get_ad(), adContainerParams);
-            return true;
         }
-        return false;
     }
 }

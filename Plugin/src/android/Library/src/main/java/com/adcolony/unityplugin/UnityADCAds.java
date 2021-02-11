@@ -4,10 +4,13 @@ import android.app.Activity;
 import android.location.Location;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.ViewParent;
 
 import com.adcolony.sdk.AdColony;
 import com.adcolony.sdk.AdColonyAdOptions;
 import com.adcolony.sdk.AdColonyAdSize;
+import com.adcolony.sdk.AdColonyAdView;
 import com.adcolony.sdk.AdColonyAppOptions;
 import com.adcolony.sdk.AdColonyCustomMessage;
 import com.adcolony.sdk.AdColonyCustomMessageListener;
@@ -515,9 +518,24 @@ public class UnityADCAds {
         UnityADCAdViewContainer adcAdViewContainer = getSharedInstance()._adViewContainers.get(id);
         if (adcAdViewContainer != null && adcAdViewContainer.ad != null
                 && adcAdViewContainer.ad.get_ad() != null) {
-            adcAdViewContainer.ad.get_ad().destroy();
+            AdColonyAdView adView = adcAdViewContainer.ad.get_ad();
+            adView.destroy();
             getSharedInstance()._adViewContainers.remove(id);
+
+            removeAdViewFromParent(adView);
         }
+    }
+
+    private static void removeAdViewFromParent(final AdColonyAdView adView) {
+        UnityPlayer.currentActivity.runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                ViewParent parent = adView.getParent();
+                if (parent != null) {
+                    ((ViewGroup) parent).removeView(adView);
+                }
+            }
+        });
     }
 
     private static AdColonyAdSize getAdSize(int adSize) {
