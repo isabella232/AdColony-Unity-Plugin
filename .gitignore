@@ -8,17 +8,22 @@ Plugin/src/android/build
 Plugin/src/android/Library/libs/
 Plugin/src/android/Library/gen
 Plugin/src/android/Library/local.properties
-Plugin/Assets/Plugins/Android/libs/
 Plugin/src/android/.settings/
 Plugin/src/android/Library/.classpath
 Plugin/src/android/Library/.settings/
+Plugin/Assets/Plugins/Android/
+Plugin/Assets/Plugins/iOS/Adcolony/AdColony.framework
 
 Sample/Library
 Sample/Temp
+Sample/Logs
+Sample/Packages
 Sample/Assets/AdColony*
 Sample/Assets/PlayServicesResolver*
-Sample/Assets/Plugins
+Sample/Assets/ExternalDependencyManager*
+Sample/Assets/Plugins*
 Sample/UnityPackageManager/
+Sample/UserSettings/
 
 tmp.*
 scripts/*.log
@@ -39,4 +44,9 @@ scripts/*.log
 .vscode
 
 .gradle
+.idea
+.build/
+local.properties
+
+!external-dependency-manager-latest.unitypackage
 

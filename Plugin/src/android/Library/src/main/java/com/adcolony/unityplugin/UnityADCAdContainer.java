@@ -17,7 +17,7 @@ public class UnityADCAdContainer extends AdColonyInterstitialListener {
     UnityADCAdContainer() {
     }
 
-    protected void finalize() throws Throwable {
+    protected void finalize() {
     }
 
     public void onRequestFilled(AdColonyInterstitial ad) {
@@ -77,7 +77,7 @@ public class UnityADCAdContainer extends AdColonyInterstitialListener {
     }
 
     public void onIAPEvent(AdColonyInterstitial ad, String productId, int engagementType) {
-        Map<String, Object> data = new HashMap<String, Object>();
+        Map<String, Object> data = new HashMap<>();
         if (this.ad != null) {
             data.put("ad", ad);
             data.put("engagement", engagementType);

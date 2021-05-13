@@ -15,7 +15,9 @@ namespace AdColony
         /// Configure and set this property to improve ad targeting.
         /// <see cref="AdColonyUserMetadata" />
         /// </summary>
+        #pragma warning disable 0618
         public UserMetadata Metadata;
+        #pragma warning restore 0618
 
         /// <summary>
         /// Sets a supported option.
@@ -216,7 +218,9 @@ namespace AdColony
             if (values.ContainsKey(Constants.OptionsMetadataKey))
             {
                 Hashtable metadataValues = values[Constants.OptionsMetadataKey] as Hashtable;
+                #pragma warning disable 0618
                 Metadata = new UserMetadata(metadataValues);
+                #pragma warning restore 0618
                 _data.Remove(Constants.OptionsMetadataKey);
             }
         }
@@ -288,7 +292,9 @@ namespace AdColony
             }
         }
 
+        #pragma warning disable 0618
         private AdOrientationType _adOrientation = AdOrientationType.AdColonyOrientationAll;
+        #pragma warning restore 0618
         /// <summary>
         /// Sets the desired ad orientation.
         /// Set this property to configure the desired orientation for your ads.
@@ -423,7 +429,9 @@ namespace AdColony
                 }
                 if (values.ContainsKey(Constants.AppOptionsOrientationKey))
                 {
+                    #pragma warning disable 0618
                     _adOrientation = (AdOrientationType)Convert.ToInt32(values[Constants.AppOptionsOrientationKey]);
+                    #pragma warning restore 0618
                 }
                 if (values.ContainsKey(Constants.AppOptionsMultiWindowEnabledKey))
                 {

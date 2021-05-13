@@ -10,9 +10,9 @@ import java.util.Map;
 public class UnityADCAdViewAds {
     public String id;
 
-    private AdColonyAdSize adColonyAdSize;
-    private int adPosition;
-    private AdColonyAdView _ad;
+    private final AdColonyAdSize adColonyAdSize;
+    private final int adPosition;
+    private final AdColonyAdView _ad;
 
     UnityADCAdViewAds(AdColonyAdView ad, String id, int adPosition) {
         _ad = ad;
@@ -28,8 +28,7 @@ public class UnityADCAdViewAds {
             data.put("id", id);
             data.put("position", Integer.toString(adPosition));
         }
-        String json = UnityADCUtils.toJson(data);
-        return json;
+        return UnityADCUtils.toJson(data);
     }
 
     public AdColonyAdSize getAdColonyAdSize() {

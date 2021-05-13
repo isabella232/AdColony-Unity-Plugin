@@ -37,6 +37,7 @@ using System.Text;
 using Convert = System.Convert;
 using Char = System.Char;
 using Array = System.Array;
+using CultureInfo = System.Globalization.CultureInfo;
 
 namespace AdColony
 {
@@ -722,7 +723,7 @@ namespace AdColony
 
         void SerializeNumber(double number, StringBuilder builder)
         {
-            builder.Append(Convert.ToString(number)); // , CultureInfo.InvariantCulture));
+            builder.Append(Convert.ToString(number, CultureInfo.InvariantCulture));
         }
     }
 }

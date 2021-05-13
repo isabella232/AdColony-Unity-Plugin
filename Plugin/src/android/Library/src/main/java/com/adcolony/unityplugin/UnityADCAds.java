@@ -19,7 +19,6 @@ import com.adcolony.sdk.AdColonyUserMetadata;
 import com.adcolony.sdk.AdColonyZone;
 import com.unity3d.player.UnityPlayer;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -29,25 +28,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-//
-// Useful for converting data-types between the two languages and enforcing synchronous
-// operations within an asynchronous framework (which we don't do anymore).
-//
+/*
+    Useful for converting data-types between the two languages and enforcing synchronous
+    operations within an asynchronous framework (which we don't do anymore).
+*/
 public class UnityADCAds {
-    private static Map<String, UnityADCAdContainer> _adContainers = new HashMap<>();
-    private static Map<String, UnityADCAdViewContainer> _adViewContainers = new HashMap<>();
-    private static UnityADCAds _sharedInstance;
-    private Map<String, Object> _cachedAppOptions = null;
-    private String _managerName = "";
-    private UnityADCAdColonyCustomMessageListener _customMessageListener =
-            new UnityADCAdColonyCustomMessageListener();
-    private Set<String> _customMessageListenerTypes = new HashSet<String>();
     private static final String TAG = "UnityADCAds";
-    private static final String ADC_UNITY_ON_CONFIGURATION_COMPLETED = "AdColony" +
-            ".on_configuration_completed";
-
+    private static final String ADC_UNITY_ON_CONFIGURATION_COMPLETED = "AdColony.on_configuration_completed";
     private static final String CONSENT_STRING = "_adc_consent_string";
     private static final String CONSENT_REQUIRED = "_adc_required";
+
+    private static UnityADCAds _sharedInstance;
+    private final Map<String, UnityADCAdContainer> _adContainers = new HashMap<>();
+    private final Map<String, UnityADCAdViewContainer> _adViewContainers = new HashMap<>();
+    private final UnityADCAdColonyCustomMessageListener _customMessageListener = new UnityADCAdColonyCustomMessageListener();
+    private final Set<String> _customMessageListenerTypes = new HashSet<>();
+    private Map<String, Object> _cachedAppOptions = null;
+    private String _managerName = "";
 
     static synchronized UnityADCAds getSharedInstance() {
         if (_sharedInstance == null) {
@@ -65,7 +62,7 @@ public class UnityADCAds {
     }
 
     AdColonyAppOptions appOptionsFromMap(Map<String, Object> map) {
-        Map<String, Object> mapCopy = new HashMap<String, Object>(map);
+        Map<String, Object> mapCopy = new HashMap<>(map);
         AdColonyAppOptions options = new AdColonyAppOptions();
 
         if (mapCopy.containsKey("metadata")) {
@@ -100,16 +97,13 @@ public class UnityADCAds {
             options.setMultiWindowEnabled((Boolean) mapCopy.get("multi_window_enabled"));
             mapCopy.remove("multi_window_enabled");
         }
-        if (mapCopy.containsKey("logging")) {
-            // TODO: disable logging isn't available on Android
-            mapCopy.remove("logging");
-        }
+
+        // TODO: disable logging isn't available on Android
+        mapCopy.remove("logging");
 
         // NOTE: setAppVersion isn't exposed on iOS
-        if (mapCopy.containsKey("app_version")) {
-            // options.setAppVersion((String)mapCopy.get("app_version"));
-            mapCopy.remove("app_version");
-        }
+        mapCopy.remove("app_version");
+
         if (mapCopy.containsKey("plugin_version")) {
             options.setPlugin(AdColonyAppOptions.UNITY, (String) mapCopy.get("plugin_version"));
             mapCopy.remove("plugin_version");
@@ -138,7 +132,7 @@ public class UnityADCAds {
     }
 
     AdColonyAdOptions adOptionsFromMap(Map<String, Object> map) {
-        Map<String, Object> mapCopy = new HashMap<String, Object>(map);
+        Map<String, Object> mapCopy = new HashMap<>(map);
         AdColonyAdOptions options = new AdColonyAdOptions();
 
         if (mapCopy.containsKey("metadata")) {
@@ -174,8 +168,9 @@ public class UnityADCAds {
         return options;
     }
 
+    @Deprecated
     AdColonyUserMetadata metadataFromMap(Map<String, Object> map) {
-        Map<String, Object> mapCopy = new HashMap<String, Object>(map);
+        Map<String, Object> mapCopy = new HashMap<>(map);
         AdColonyUserMetadata meta = new AdColonyUserMetadata();
 
         if (mapCopy.containsKey("age")) {
@@ -263,7 +258,6 @@ public class UnityADCAds {
                 AdColony.removeCustomMessageListener(ADC_UNITY_ON_CONFIGURATION_COMPLETED);
                 try {
                     JSONObject message = new JSONObject(customMessage.getMessage());
-                    JSONArray zoneIds = message.getJSONArray("zone_ids");
                     List lZoneIds = UnityADCUtils.toList(message.getJSONArray("zone_ids"));
                     String zoneListJson = UnityADCUtils.toJsonFromStringList(lZoneIds);
                     sendUnityMessage("_OnConfigure", zoneListJson);
@@ -294,17 +288,14 @@ public class UnityADCAds {
     }
 
     public static void setAppOptions(String json) {
-        AdColonyAppOptions appOptions = null;
-
         if (json != null) {
             Map<String, Object> appOptionsMap = UnityADCUtils.jsonToMap(json);
             if (appOptionsMap != null) {
-                appOptions = getSharedInstance().appOptionsFromMap(appOptionsMap);
-                getSharedInstance()._cachedAppOptions = new HashMap<String, Object>(appOptionsMap);
+                AdColonyAppOptions appOptions = getSharedInstance().appOptionsFromMap(appOptionsMap);
+                getSharedInstance()._cachedAppOptions = new HashMap<>(appOptionsMap);
+                AdColony.setAppOptions(appOptions);
             }
         }
-
-        AdColony.setAppOptions(appOptions);
     }
 
     public static String getAppOptions() {
@@ -358,7 +349,7 @@ public class UnityADCAds {
         if (json != null) {
             Map<String, Object> map = UnityADCUtils.jsonToMap(json);
             if (map != null) {
-                HashMap<String, String> hashMap = new HashMap<String, String>();
+                HashMap<String, String> hashMap = new HashMap<>();
 
                 for (Map.Entry<String, Object> entry : map.entrySet()) {
                     if (entry.getValue() != null && !entry.getValue().equals("null") && entry.getValue().getClass().equals(String.class)) {

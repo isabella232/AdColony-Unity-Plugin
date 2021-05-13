@@ -2,9 +2,9 @@
 ![progress](https://img.shields.io/badge/progress-developing-yellow.svg)
 ![contributions](https://img.shields.io/badge/contributions-welcome-green.svg)
 <br>
-![Unity Version](https://img.shields.io/badge/Unity%20Plugin-4.5.0-808080.svg)
-![Android Version](https://img.shields.io/badge/Android%20SDK-4.4.1-808080.svg)
-![iOS Version](https://img.shields.io/badge/iOS%20SDK-4.5.0-808080.svg)
+![Unity Version](https://img.shields.io/badge/Unity%20Plugin-4.6.0-808080.svg)
+![Android Version](https://img.shields.io/badge/Android%20SDK-4.5.0-808080.svg)
+![iOS Version](https://img.shields.io/badge/iOS%20SDK-4.6.1-808080.svg)
 
 # AdColony SDK Unity Plugin
 - [Requirements](#requirements)
@@ -31,8 +31,14 @@
 AdColony delivers zero-buffering, [full-screen Instant-Play™ HD video](https://www.adcolony.com/technology/instant-play/), [interactive Aurora™ Video](https://www.adcolony.com/technology/auroravideo), and Aurora™ Playable ads that can be displayed anywhere within your application. Our advertising SDK is trusted by the world’s top gaming and non-gaming publishers, delivering them the highest monetization opportunities from brand and performance advertisers. AdColony’s SDK can monetize a wide range of ad formats including in-stream/pre-roll, out-stream/interstitial and V4VC™, a secure system for rewarding users of your app with virtual currency upon the completion of video and playable ads.
 
 # Release Notes
+## v4.6.0.0 (2021/05/05)
+* Fixed ExternalDependencyManager problems and cleaned out warnings.
+* Updated Android release process.
+* Updated to AdColony SDK 4.6.1 (iOS) and SDK 4.5.0 (Android).
+
 ## v4.5.0.0 (2021/01/28)
 * Updated to AdColony SDK 4.5.0 (iOS) and SDK 4.4.1 (Android).
+
 ## v4.4.1.0 (2020/10/15)
 * Fixed banner ad on fail callback issue.
 * Added support logAdImpression and logAppOpen PI events
@@ -132,11 +138,10 @@ See the full [release notes](https://github.com/AdColony/AdColony-Unity-SDK-3/bl
 
 # How to Build
 
-The Unity plugin requires both the native iOS and Android SDK repositories in the `Plugin/src/sdks` directory. You can pull them down using the following commands:
+The Unity plugin requires the native iOS repository in the `Plugin/src/sdks` directory. You can pull it down using the following command:
 
 ```
 cd Plugin/src/sdks
-git clone https://github.com/AdColony/AdColony-Android-SDK.git
 git clone https://github.com/AdColony/AdColony-iOS-SDK.git
 ```
 
@@ -181,8 +186,7 @@ In this case, the app id, `app4c2e4129ea7ce`, and zone id, `z4c2e422e48151` shou
         <img src="images/unity_import_02.png" width="700" alt="Import Package"/>
     </p>
 
-3. The AdColony SDK Unity Plugin includes Google's PlayServicesResolver to automatically pull in necessary Google Play Services libraries. If there are conflicts with this, the `play-services-ads` library is the only required. You can choose to ignore this PlayServicesResolver installation, remove the `AdColony/Editor/ADCDependencies.cs` file, and include the `play-services-ads` in another way.
-4. The Plugins/Android/AdColony/AndroidManifest.xml file is automatically generated. To update manually, select "Tools"->"AdColony"->"Update AndroidManifest.xml".
+3. The AdColony SDK Unity Plugin includes Google's ExternalDependencyManager (EDM4U) (formerly Play Services Resolver / Jar Resolver) to automatically pull in necessary libraries. If there are conflicts with this, the `play-services-ads` and `adcolony-sdk` libraries are the only required. You can choose to ignore this ExternalDependencyManager installation by excluding `AdColony/Editor/ADCDependencies.xml`, `PlayServicesResolver` and `ExternalDependencyManager` files when importing `AdColony.unitypackage` and include the `play-services-ads` and `adcolony-sdk` in another way.
 
 #### Upgrading from SDK 3.0.x:
 In order to support thin/fat Android builds, we moved the native .so files from the `Plugins/Android/AdColony/libs` folder to the `Plugins/Android/libs` folder. Removing the `Plugins/Android/AdColony/libs` folder before importing is recommended.

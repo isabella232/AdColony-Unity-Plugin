@@ -55,8 +55,7 @@ public class UnityADCUtils {
             if (json != JSONObject.NULL) {
                 value = toList(jsonObject);
             }
-        } catch (JSONException e) {
-        }
+        } catch (JSONException ignored) { }
         return value;
     }
 
@@ -72,13 +71,12 @@ public class UnityADCUtils {
             if (json != JSONObject.NULL) {
                 value = toMap(jsonObject);
             }
-        } catch (JSONException e) {
-        }
+        } catch (JSONException ignored) { }
         return value;
     }
 
     static Map<String, Object> toMap(JSONObject object) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
 
         Iterator<String> keysItr = object.keys();
         while (keysItr.hasNext()) {
@@ -105,7 +103,7 @@ public class UnityADCUtils {
     }
 
     static List<Object> toList(JSONArray array) {
-        List<Object> list = new ArrayList<Object>();
+        List<Object> list = new ArrayList<>();
         for (int i = 0; i < array.length(); i++) {
             try {
                 Object jsonObject = array.get(i);
@@ -130,7 +128,7 @@ public class UnityADCUtils {
     }
 
     static String zoneToJson(AdColonyZone zone) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         if (zone != null) {
             map.put("zone_id", zone.getZoneID());
             map.put("type", zone.getZoneType());
@@ -145,7 +143,7 @@ public class UnityADCUtils {
     }
 
     static String adDetailsToJson(AdColonyZone zone, int position) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         if (zone != null) {
             map.put("zone_id", zone.getZoneID());
             map.put("type", zone.getZoneType());
@@ -155,7 +153,7 @@ public class UnityADCUtils {
     }
 
     static String adDetailsToJson(String zone, int position) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         if (zone != null) {
             map.put("zone_id", zone);
             map.put("type", "banner");
@@ -165,7 +163,7 @@ public class UnityADCUtils {
     }
 
     static String rewardToJson(AdColonyReward reward) {
-        Map<String, Object> map = new HashMap<String, Object>();
+        Map<String, Object> map = new HashMap<>();
         if (reward != null) {
             map.put("zone_id", reward.getZoneID());
             map.put("success", reward.success());

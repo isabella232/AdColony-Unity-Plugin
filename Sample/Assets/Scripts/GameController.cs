@@ -38,8 +38,6 @@ public class GameController : MonoBehaviour
         asteroidAdViewRequest.Hide();
         asteroidAdViewDestroy.Hide();
 
-
-
         // ----- AdColony Ads -----
 
         AdColony.Ads.OnConfigurationCompleted += (List<AdColony.Zone> zones_) =>
@@ -182,21 +180,7 @@ public class GameController : MonoBehaviour
         // Set some test app options with metadata.
         AdColony.AppOptions appOptions = new AdColony.AppOptions();
         appOptions.UserId = "foo";
-        appOptions.AdOrientation = AdColony.AdOrientationType.AdColonyOrientationAll;
         appOptions.SetOption("test_key", "Happy Fun Time!");
-
-        AdColony.UserMetadata metadata = new AdColony.UserMetadata();
-        metadata.Age = 35;
-        metadata.Gender = "Male";
-        metadata.Interests = new List<string> { "gaming", "hiking" };
-        metadata.Latitude = 47.6469425;
-        metadata.Longitude = -122.2004281;
-        metadata.ZipCode = "98033";
-        metadata.HouseholdIncome = 75000;
-        metadata.MaritalStatus = "Single";
-        metadata.EducationLevel = "Bachelors";
-        metadata.SetMetadata("test_key_02", "Happy Meta Time?");
-        appOptions.Metadata = metadata;
 
         appOptions.SetPrivacyConsentString(AdColony.AppOptions.GDPR, "1");
         appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.GDPR, true);
@@ -207,12 +191,8 @@ public class GameController : MonoBehaviour
         appOptions.SetPrivacyFrameworkRequired(AdColony.AppOptions.COPPA, true);
 
         string[] zoneIDs = new string[] { Constants.InterstitialZoneID, Constants.AdViewZoneID, Constants.CurrencyZoneID };
-        //string[] zoneIDs = new string[] { Constants.AdViewZoneID };
 
         AdColony.Ads.Configure(Constants.AppID, appOptions, zoneIDs);
-
-      
-
     }
 
     void RequestAd()

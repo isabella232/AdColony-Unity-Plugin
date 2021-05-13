@@ -4,17 +4,18 @@ buildscript {
         google()
         jcenter()
     }
+    ext {
+        gradleVersion = "4.1.3"
+        adcolonyVersion = "4.5.0"
+    }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.3'
+        classpath "com.android.tools.build:gradle:$gradleVersion"
     }
 }
 
 allprojects {
     repositories {
         google()
-        jcenter()
-        maven {
-            url  "https://adcolony.bintray.com/AdColony"
-        }
+        mavenCentral()
     }
 }

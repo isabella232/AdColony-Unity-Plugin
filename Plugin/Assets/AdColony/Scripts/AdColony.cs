@@ -896,7 +896,9 @@ namespace AdColony
         private static Ads _sharedGameObject;
         private static bool _initialized;
         private IAds _sharedInstance;
+        #pragma warning disable 0649
         private IEventTracker _eventTracker;
+        #pragma warning restore 0649
         private readonly System.Object _updateOnMainThreadActionsLock = new System.Object();
         private readonly Queue<System.Action> _updateOnMainThreadActions = new Queue<System.Action>();
 
